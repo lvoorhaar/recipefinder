@@ -49,7 +49,11 @@ public class DBconnect {
         
         Recipe found = query.first();
         
-        System.out.println(found.toString());
+        System.out.println(found);
+        
+        List<Recipe> recipes = query.find().toList();
+        
+        System.out.println(recipes);
     }
     
 }

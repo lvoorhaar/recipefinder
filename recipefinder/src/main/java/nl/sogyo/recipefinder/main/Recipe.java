@@ -19,7 +19,7 @@ import org.bson.types.ObjectId;
  *
  * @author lvoorhaar
  */
-@Entity("recipes-morphiadb")
+@Entity("recipes-testdb")
 public class Recipe {
     
     @Id
@@ -31,9 +31,7 @@ public class Recipe {
     private String instructions;
     private List<Ingredient> ingredients;
     
-    public Recipe() {
-        
-    }
+    public Recipe() {}
 
     public Recipe(String name, ArrayList<Category> categories, int preptime, int rating, String instructions, ArrayList<Ingredient> ingredients) {
         this.name = name;
@@ -79,6 +77,7 @@ public class Recipe {
         for (Ingredient i : this.ingredients) {
             string += "\n - " + i.toString();
         }
+        string += "\n";
         return string;
     }
     

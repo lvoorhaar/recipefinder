@@ -6,7 +6,12 @@
 package nl.sogyo.recipefinder.main;
 
 
+import com.mongodb.MongoClient;
+import dev.morphia.Datastore;
+import dev.morphia.Morphia;
+import dev.morphia.query.Query;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -14,24 +19,23 @@ import java.util.ArrayList;
  */
 public class RecipeCollection {
     
-    private ArrayList<Recipe> recipes;
+    private List<Recipe> recipes;
     
     public RecipeCollection() {
-        /*MongoClient mongoClient = MongoClients.create();
-        MongoDatabase database = mongoClient.getDatabase("recipes");
-        MongoCollection<Document> collection = database.getCollection("recipes-testdb");
         this.recipes = new ArrayList<Recipe>();
-        for (Document doc : collection.find()) {
-            recipes.add(new Recipe(doc));
-        }
-        mongoClient.close();*/
+        Morphia morphia = new Morphia();
+        morphia.mapPackage("nl.sogyo.recipefinder.main");
+        Datastore datastore = morphia.createDatastore(new MongoClient(), "recipes");
+        datastore.ensureIndexes();
+        Query<Recipe> query = datastore.createQuery(Recipe.class);
+        this.recipes = query.find().toList();
     }
     
     public void updateRecipes() {
         
     }
     
-    public ArrayList<Recipe> getRecipes() {
+    public List<Recipe> getRecipes() {
         return this.recipes;
     }
 }
