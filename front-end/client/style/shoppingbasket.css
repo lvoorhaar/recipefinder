@@ -1,0 +1,33 @@
+article {
+    height: auto;
+	text-align: center;
+	border: 5px solid var(--primary-color);
+	padding-top: 20px;
+	margin-bottom: 20px;
+	line-height: 160%;
+}
+
+button {
+	background-color: blue;
+	border-color: #4d4dff;
+	color: white;
+	font-weight: bold;
+	font-size: 16px;
+	border-radius: 20px;
+	padding: 5px 10px;
+}
+
+button:hover {
+	background-color:  #000080;
+	border-color: blue;
+}
+
+button:active {
+	background-color: #000080;
+	transform: translateY(3px);
+}
+
+button:disabled {
+	background-color:  #CBC8C8;
+	border-color: white;
+}
