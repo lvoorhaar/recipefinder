@@ -5,6 +5,7 @@
  */
 package nl.sogyo.recipefinder.dbconnect;
 
+import com.google.gson.Gson;
 import com.mongodb.MongoClient;
 import dev.morphia.Datastore;
 import dev.morphia.Morphia;
@@ -15,6 +16,7 @@ import java.util.List;
 import nl.sogyo.recipefinder.main.Category;
 import nl.sogyo.recipefinder.main.Ingredient;
 import nl.sogyo.recipefinder.main.Recipe;
+import nl.sogyo.recipefinder.main.RecipeCollection;
 
 /**
  *
@@ -26,7 +28,7 @@ public class DBconnect {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Morphia morphia = new Morphia();
+        /*Morphia morphia = new Morphia();
         morphia.mapPackage("nl.sogyo.recipefinder.main");
         Datastore datastore = morphia.createDatastore(new MongoClient(), "recipes");
         datastore.ensureIndexes();
@@ -41,7 +43,7 @@ public class DBconnect {
         Recipe testRecipe = new Recipe("test", new ArrayList<Category>(Arrays.asList(Category.BREAKFAST)), 5, 1, "blabla", ingredients);
         datastore.save(testRecipe);*/
         
-        Query<Recipe> query = datastore.createQuery(Recipe.class);
+        /*Query<Recipe> query = datastore.createQuery(Recipe.class);
 
         long number = query.count();
 
@@ -51,9 +53,14 @@ public class DBconnect {
         
         System.out.println(found);
         
-        List<Recipe> recipes = query.find().toList();
+        List<Recipe> recipes = query.find().toList();*/
         
-        System.out.println(recipes);
+        RecipeCollection r = new RecipeCollection();
+        List<Recipe> recipes = r.getRecipes();
+        
+        String JSONoutput = new Gson().toJson(recipes);
+        
+        System.out.println(JSONoutput);
     }
     
 }

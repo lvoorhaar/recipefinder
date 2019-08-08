@@ -5,11 +5,11 @@
  */
 package nl.sogyo.recipefinder.api;
 
+import com.google.gson.Gson;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
@@ -24,24 +24,19 @@ import nl.sogyo.recipefinder.main.RecipeCollection;
  */
 @Path("loadrecipes")
 public class RecipeLoader {
-    /**
-	 * @param request
-	 * @return
-	 */
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response initialize(
-			@Context HttpServletRequest request) {
-		
-		HttpSession session = request.getSession(true);
-		RecipeCollection recipeCollection = new RecipeCollection();
-                List<Recipe> recipes = recipeCollection.getRecipes();
-		
-		session.setAttribute("recipes", recipes);		
-		
-		//String output = new JSONResultProcessor().createJSONResponse(recipes);
-		
-		return Response.status(200).entity(output).build();
-	}
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response loadRecipes(
+            @Context HttpServletRequest request) {
+
+        System.out.println("received fetch call");
+        HttpSession session = request.getSession(true);
+        RecipeCollection recipeCollection = new RecipeCollection();
+        List<Recipe> recipes = recipeCollection.getRecipes();
+        
+        String output = new Gson().toJson(recipes);
+
+        return Response.status(200).entity(output).build();
+    }
 }

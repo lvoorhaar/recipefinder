@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>nl.sogyo.recipefinder</groupId>
-    <artifactId>RecipeFinderAPI</artifactId>
+    <artifactId>recipefinderapi</artifactId>
     <version>1</version>
     <packaging>war</packaging>
     <properties>
@@ -14,8 +14,8 @@
     
     <dependencies>
         <dependency>
-            <groupId>nl.sogyo.recipefinder.main</groupId>
-            <artifactId>recipefinder</artifactId>
+            <groupId>nl.sogyo.recipefinder</groupId>
+            <artifactId>recipefinderdomain</artifactId>
             <version>1</version>
         </dependency>
         <dependency>
@@ -62,10 +62,10 @@
             <version>1.1.1</version>
         </dependency>
         <dependency>
-            <groupId>nl.sogyo</groupId>
-            <artifactId>recipefinder</artifactId>
-            <version>1</version>
-            <type>jar</type>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.2.2</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
@@ -97,7 +97,7 @@
                         <port>80</port>
                     </httpConnector>
                     <webApp>
-                        <contextPath>/mancala</contextPath>
+                        <contextPath>/recipefinder</contextPath>
                     </webApp>
                 </configuration>
             </plugin>
