@@ -42,4 +42,17 @@ public class Ingredient {
     public boolean matches(Ingredient ingredient) {
         return false;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+  
 }

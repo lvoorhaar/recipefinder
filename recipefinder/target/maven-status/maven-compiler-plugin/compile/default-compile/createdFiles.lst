@@ -1,5 +1,6 @@
 nl\sogyo\recipefinder\main\Category.class
 nl\sogyo\recipefinder\dbconnect\ImportHandler.class
+nl\sogyo\recipefinder\dbconnect\WebReader.class
 nl\sogyo\recipefinder\main\RecipeCollection.class
 nl\sogyo\recipefinder\main\Converter.class
 nl\sogyo\recipefinder\main\RecipeSearch.class

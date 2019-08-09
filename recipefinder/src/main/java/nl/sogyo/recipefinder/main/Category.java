@@ -15,7 +15,9 @@ public enum Category {
     COOKIES("cookies"),
     BREAKFAST("breakfast"),
     DINNER("dinner"),
-    SNACKS("snacks");
+    SNACKS("snacks"),
+    DESSERT("dessert"),
+    UNKNOWN("unknown");
     
     private final String name;
     
