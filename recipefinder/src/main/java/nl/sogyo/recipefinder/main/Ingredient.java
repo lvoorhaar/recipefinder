@@ -39,7 +39,19 @@ public class Ingredient {
         return null;
     }
     
-    public boolean matches(Ingredient ingredient) {
+    public boolean matches(String ingredient) {
+        if ((this.name).contains(ingredient.toLowerCase().trim())) {
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean matches(List<String> ingredients) {
+        for (String ingredient : ingredients) {
+            if (this.matches(ingredient)) {
+                return true;
+            }
+        }
         return false;
     }
 

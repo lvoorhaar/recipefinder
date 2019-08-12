@@ -10,9 +10,11 @@
         <link rel="stylesheet" href="style/main.css">
 		
 		<link rel="icon" href="img/favicon.ico">
+		
+		<script src="src/main.js"></script>
     </head>
 
-    <body>
+    <body onload="loadSearchPage();">
 
         <header id="logo-header">
             <img src="img/logo.png">
@@ -35,9 +37,34 @@
         </nav>
 
         <main>
-
-            
-
+			<div id="buttons">
+				<button id="addfields">Add more fields</button>
+				<button id="searchbutton">Search</button>
+			</div>
+			<div id="searchfields"></div>
+			<div id="recipes"></div>
         </main>
+		
+		<template id="searchfield">
+			<input class="ingredientsearchfield" type="text" placeholder="Enter an ingredient"></input>
+        </template>
+		
+		<template id="recipe">
+			<article>
+				<button class="namebutton"></button>
+				<div class="content">
+				<div class="properties">
+					<div class="categories">Categories: </div>
+					<div class="rating">Rating: </div>
+					<div class="preptime">Preparation time: </div>
+				</div>
+				<ul class="ingredients">Ingredients:
+					<li class="ingredient"></li>
+				</ul>
+				<div class="instructions"></div>
+				</div>
+			</article>
+        </template>
+		
     </body>
 </html>

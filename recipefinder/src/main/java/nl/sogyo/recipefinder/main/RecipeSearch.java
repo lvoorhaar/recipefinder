@@ -6,6 +6,7 @@
 package nl.sogyo.recipefinder.main;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -13,29 +14,36 @@ import java.util.ArrayList;
  */
 public class RecipeSearch {
     
-    private ArrayList<Category> categories;
+    private List<Category> categories;
     private int maxPreptime;
-    private ArrayList<Ingredient> ingredients;
+    private List<String> ingredients;
     private RecipeCollection recipeCollection;
     
-    public RecipeSearch(ArrayList<Ingredient> ingredients) {
+    public RecipeSearch(List<String> ingredients) {
+        this.ingredients = ingredients;
+        this.recipeCollection = new RecipeCollection();
+    }
+    
+    public RecipeSearch(List<String> ingredients, ArrayList<Category> categories) {
         
     }
     
-    public RecipeSearch(ArrayList<Ingredient> ingredients, ArrayList<Category> categories) {
+    public RecipeSearch(List<String> ingredients, int maxPreptime) {
         
     }
     
-    public RecipeSearch(ArrayList<Ingredient> ingredients, int maxPreptime) {
-        
-    }
-    
-    public RecipeSearch(ArrayList<Ingredient> ingredients, ArrayList<Category> categories, int maxPreptime) {
+    public RecipeSearch(List<String> ingredients, ArrayList<Category> categories, int maxPreptime) {
         
     }
     
     public ArrayList<Recipe> findRecipes() {
-        return null;
+        ArrayList<Recipe> matchingRecipes = new ArrayList<>();
+        for (Recipe currentRecipe : this.recipeCollection.getRecipes()) {
+            if (currentRecipe.matchesIngredients(this.ingredients)) {
+                matchingRecipes.add(currentRecipe);
+            }
+        }
+        return matchingRecipes;
     }
     
     public ArrayList<Recipe> sortRecipes() {

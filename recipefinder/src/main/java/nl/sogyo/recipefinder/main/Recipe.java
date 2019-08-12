@@ -7,11 +7,8 @@ package nl.sogyo.recipefinder.main;
 
 import java.util.ArrayList;
 import java.util.Map;
-import dev.morphia.annotations.Embedded;
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
-import dev.morphia.annotations.Property;
-import dev.morphia.annotations.Reference;
 import java.util.List;
 import org.bson.types.ObjectId;
 
@@ -25,7 +22,7 @@ public class Recipe {
     @Id
     private ObjectId id;
     private String name;
-    private ArrayList<Category> categories;
+    private List<Category> categories;
     private int preptime;
     private int rating;
     private String instructions;
@@ -33,7 +30,7 @@ public class Recipe {
     
     public Recipe() {}
 
-    public Recipe(String name, ArrayList<Category> categories, int preptime, int rating, String instructions, ArrayList<Ingredient> ingredients) {
+    public Recipe(String name, List<Category> categories, int preptime, int rating, String instructions, List<Ingredient> ingredients) {
         this.name = name;
         this.categories = categories;
         this.preptime = preptime;
@@ -81,19 +78,70 @@ public class Recipe {
         return string;
     }
     
-    private boolean matchesIngredients(ArrayList<Ingredient> searchIngredients) {
+    boolean matchesIngredients(List<String> searchIngredients) {
+        for (Ingredient ingredient : this.ingredients) {
+            if (!ingredient.matches(searchIngredients)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    boolean matchesCategories(List<Category> searchCategories) {
         return false;
     }
     
-    private boolean matchesCategories(ArrayList<Category> searchCategories) {
+    boolean matchesPreptime(int searchPreptime) {
         return false;
     }
     
-    private boolean matchesPreptime(int searchPreptime) {
+    boolean matchesSearch(List<Ingredient> searchIngredients, List<Category> searchCategories, int searchPreptime) {
         return false;
+    }
+
+    String getName() {
+        return name;
+    }
+
+    List<Category> getCategories() {
+        return categories;
+    }
+
+    void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
+
+    int getPreptime() {
+        return preptime;
+    }
+
+    void setPreptime(int preptime) {
+        this.preptime = preptime;
+    }
+
+    int getRating() {
+        return rating;
+    }
+
+    void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    String getInstructions() {
+        return instructions;
+    }
+
+    void setInstructions(String instructions) {
+        this.instructions = instructions;
+    }
+
+    List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
     
-    private boolean matchesSearch(ArrayList<Ingredient> searchIngredients, ArrayList<Category> searchCategories, int searchPreptime) {
-        return false;
-    }
+    
 }
