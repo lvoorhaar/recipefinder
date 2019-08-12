@@ -70,18 +70,18 @@ public class WebReader {
         for (Element e : ingredientsElements) {
             Ingredient i = new Ingredient();
             if (!e.getElementsByClass("wprm-recipe-ingredient-amount").isEmpty()) {
-                i.setAmount(e.getElementsByClass("wprm-recipe-ingredient-amount").get(0).text());
+                i.setAmount(e.getElementsByClass("wprm-recipe-ingredient-amount").get(0).text().trim());
             } else {
                 i.setAmount("1");
             }
             if (!e.getElementsByClass("wprm-recipe-ingredient-unit").isEmpty()) {
-                i.setUnit(e.getElementsByClass("wprm-recipe-ingredient-unit").get(0).text());
+                i.setUnit(e.getElementsByClass("wprm-recipe-ingredient-unit").get(0).text().trim());
             } else {
                 i.setUnit("(number)");
             }
-            String ingredientName = e.getElementsByClass("wprm-recipe-ingredient-name").get(0).text();
+            String ingredientName = e.getElementsByClass("wprm-recipe-ingredient-name").get(0).text().trim();
             if (!e.getElementsByClass("wprm-recipe-ingredient-notes").isEmpty()) {
-                ingredientName += e.getElementsByClass("wprm-recipe-ingredient-notes").get(0).text();
+                ingredientName += e.getElementsByClass("wprm-recipe-ingredient-notes").get(0).text().trim();
             }
             i.setName(ingredientName);
             ingredients.add(i);
@@ -94,7 +94,7 @@ public class WebReader {
 
     public static void main(String[] args) throws Exception {
 
-        Recipe importedRecipe = WebReader.getRecipeFromWebsite("https://www.biggerbolderbaking.com/neapolitan-ice-cream/");
+        Recipe importedRecipe = WebReader.getRecipeFromWebsite("no link");
 
         System.out.println(importedRecipe);
 
