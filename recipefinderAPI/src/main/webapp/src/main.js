@@ -42,7 +42,10 @@ function search() {
 			parentField.removeChild(field);
 		}
 	}
-	console.log(ingredients);
+	resultFields = document.getElementById("recipes");
+	while (resultFields.firstChild) {
+		resultFields.removeChild(resultFields.firstChild);
+	}
 	searchPOST(ingredients);
 }
 
@@ -144,6 +147,7 @@ function creatNodes(recipeList) {
 
 	addEventListernersRecipe();
 }
+
 
 
 	

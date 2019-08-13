@@ -1,3 +1,5 @@
+This program needs Java SE Development Kit 8 and Apache Maven installed.
+
 Install MongoDB Community Server (version 4.0.12) from https://www.mongodb.com/download-center/community.
 
 How to build the app:

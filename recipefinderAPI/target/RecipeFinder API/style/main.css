@@ -15,6 +15,7 @@ body {
 	margin-top: 15px;
 	width: 100%;
 	text-align: center;
+	z-index: 2;
 }
 
 #logo-header {
@@ -25,6 +26,7 @@ body {
 	margin-top: 0px;
 	width: 100%;
 	background-color: var(--primary-color);
+	z-index: 1;
 }
 
 #logo-header img {
@@ -42,7 +44,8 @@ nav {
 	margin-top: 70px;
 	width: 100%;
 	text-align: center;
-	color: white
+	color: white;
+	z-index: 2;
 }
 
 a:link {
@@ -163,6 +166,7 @@ article {
 	margin-left: auto;
 	margin-right: auto;
 	width: 430px;
+	margin-bottom: 40px;
 }
 
 .ingredientsearchfield {
@@ -174,7 +178,7 @@ article {
 #buttons {
 	display: grid;
 	grid-template-columns: 230px;
-	position: fixed;
+	position: absolute;
 	margin-top: 0px;
 	margin-left: 70%;
 }

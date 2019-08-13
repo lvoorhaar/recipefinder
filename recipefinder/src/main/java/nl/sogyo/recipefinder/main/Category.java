@@ -5,6 +5,8 @@
  */
 package nl.sogyo.recipefinder.main;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author lvoorhaar
@@ -28,5 +30,13 @@ public enum Category {
     @Override
     public String toString() {
        return this.name;
+    }
+    
+    public static ArrayList<String> getCategories() {
+        ArrayList<String> categories = new ArrayList<>();
+        for (Category c : Category.values()) {
+            categories.add(c.toString());
+        }
+        return categories;
     }
 }

@@ -40,7 +40,9 @@ public class Ingredient {
     }
     
     public boolean matches(String ingredient) {
-        if ((this.name).contains(ingredient.toLowerCase().trim())) {
+        if (this.name.contains("optional")) {
+            return true;
+        } else if (this.name.contains(ingredient.toLowerCase().trim())) {
             return true;
         }
         return false;
