@@ -40,7 +40,7 @@ public class RecipeSearcher {
         List<String> ingredientList = Arrays.asList(ingredientArray);
         
         RecipeSearch search = new RecipeSearch(ingredientList);
-        ArrayList<Recipe> recipes = search.findRecipes();
+        List<Recipe> recipes = search.findRecipes();
         
         String output = new Gson().toJson(recipes);
 

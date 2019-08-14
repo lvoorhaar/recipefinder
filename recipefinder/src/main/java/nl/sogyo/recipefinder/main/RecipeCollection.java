@@ -22,7 +22,6 @@ public class RecipeCollection {
     private List<Recipe> recipes;
     
     public RecipeCollection() {
-        this.recipes = new ArrayList<Recipe>();
         Morphia morphia = new Morphia();
         morphia.mapPackage("nl.sogyo.recipefinder.main");
         Datastore datastore = morphia.createDatastore(new MongoClient(), "recipes");

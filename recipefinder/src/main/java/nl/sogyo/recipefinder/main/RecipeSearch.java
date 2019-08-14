@@ -5,6 +5,10 @@
  */
 package nl.sogyo.recipefinder.main;
 
+import com.mongodb.MongoClient;
+import dev.morphia.Datastore;
+import dev.morphia.Morphia;
+import dev.morphia.query.Query;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,14 +21,22 @@ public class RecipeSearch {
     private List<Category> categories;
     private int maxPreptime;
     private List<String> ingredients;
-    private RecipeCollection recipeCollection;
+    //private RecipeCollection recipeCollection;
+    private Morphia morphia;
+    private Datastore datastore;
+    private Query<Recipe> query;
     
     public RecipeSearch(List<String> ingredients) {
         this.ingredients = ingredients;
-        this.recipeCollection = new RecipeCollection();
+        this.morphia = new Morphia();
+        morphia.mapPackage("nl.sogyo.recipefinder.main");
+        this.datastore = morphia.createDatastore(new MongoClient(), "recipes");
+        datastore.ensureIndexes();
+        this.query = datastore.createQuery(Recipe.class);
+        //this.recipeCollection = new RecipeCollection();
     }
     
-    public RecipeSearch(List<String> ingredients, ArrayList<Category> categories) {
+    public RecipeSearch(List<String> ingredients, List<Category> categories) {
         
     }
     
@@ -36,13 +48,14 @@ public class RecipeSearch {
         
     }
     
-    public ArrayList<Recipe> findRecipes() {
-        ArrayList<Recipe> matchingRecipes = new ArrayList<>();
+    public List<Recipe> findRecipes() {
+        /*ArrayList<Recipe> matchingRecipes = new ArrayList<>();
         for (Recipe currentRecipe : this.recipeCollection.getRecipes()) {
             if (currentRecipe.matchesIngredients(this.ingredients)) {
                 matchingRecipes.add(currentRecipe);
             }
-        }
+        }*/
+        List<Recipe> matchingRecipes = query.filter("ingredients.name all", this.ingredients).find().toList();
         return matchingRecipes;
     }
     

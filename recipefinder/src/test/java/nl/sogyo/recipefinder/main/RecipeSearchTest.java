@@ -6,6 +6,8 @@
 package nl.sogyo.recipefinder.main;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -16,12 +18,9 @@ import org.junit.Test;
 public class RecipeSearchTest {
     @Test
     public void testShortbreadCookies() {
-        ArrayList<String> ingredients = new ArrayList<>();
-        ingredients.add("flour");
-        ingredients.add("sugar");
-        ingredients.add("butter");
+        List<String> ingredients = Arrays.asList("all purpose flour","butter","powdered sugar");
         RecipeSearch search = new RecipeSearch(ingredients);
-        ArrayList<Recipe> recipes = search.findRecipes();
+        List<Recipe> recipes = search.findRecipes();
         String name = recipes.get(0).getName();
         Assert.assertEquals(name, "3 Ingredient Shortbread Cookies");
     }

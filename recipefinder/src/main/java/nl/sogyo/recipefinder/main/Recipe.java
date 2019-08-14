@@ -8,7 +8,11 @@ package nl.sogyo.recipefinder.main;
 import java.util.ArrayList;
 import java.util.Map;
 import dev.morphia.annotations.Entity;
+import dev.morphia.annotations.Field;
 import dev.morphia.annotations.Id;
+import dev.morphia.annotations.Index;
+import dev.morphia.annotations.Indexes;
+import dev.morphia.utils.IndexType;
 import java.util.List;
 import org.bson.types.ObjectId;
 
@@ -16,6 +20,7 @@ import org.bson.types.ObjectId;
  *
  * @author lvoorhaar
  */
+@Indexes(@Index(fields = @Field(value = "$**", type = IndexType.TEXT)))
 @Entity("recipes-testdb")
 public class Recipe {
     
@@ -45,12 +50,12 @@ public class Recipe {
         this.rating = (Integer)document.get("rating");
         this.instructions = (String)document.get("instructions");
         
-        this.categories = new ArrayList<Category>();
+        this.categories = new ArrayList<>();
         for (String category : (ArrayList<String>)document.get("category")) {
             this.categories.add(Category.valueOf(category.toUpperCase()));
         }
         
-        this.ingredients = new ArrayList<Ingredient>();
+        this.ingredients = new ArrayList<>();
         for (ArrayList<String> ingredient : (ArrayList<ArrayList<String>>)document.get("ingredients")) {
             this.ingredients.add(new Ingredient(ingredient));
         }
