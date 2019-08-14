@@ -17,6 +17,7 @@ public class Ingredient {
     private String name;
     private String amount;
     private String unit;
+    private String notes;
 
     public Ingredient() {}
     
@@ -28,7 +29,12 @@ public class Ingredient {
     
     @Override
     public String toString() {
-        return this.amount + " " + this.unit + " " + this.name;
+        String text = "";
+        if (this.amount != null) text += this.amount + " ";
+        if (this.unit != null) text += this.unit + " ";
+        text += this.name;
+        if (this.notes != null) text += this.notes + " ";
+        return text;
     }
     
     public String toImpString() {
@@ -40,9 +46,9 @@ public class Ingredient {
     }
     
     public boolean matches(String ingredient) {
-        if (this.name.contains("optional")) {
+        if (this.notes != null && this.notes.contains("optional")) {
             return true;
-        } else if (this.name.contains(ingredient.toLowerCase().trim())) {
+        } else if (this.name.equals(ingredient.toLowerCase().trim())) {
             return true;
         }
         return false;
@@ -68,5 +74,11 @@ public class Ingredient {
     public void setUnit(String unit) {
         this.unit = unit;
     }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+    
+    
   
 }

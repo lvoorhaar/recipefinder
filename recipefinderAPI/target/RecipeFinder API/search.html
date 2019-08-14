@@ -38,6 +38,15 @@
         </nav>
 
         <main>
+		
+		
+			<form autocomplete="off" action="/action_page.php">
+				<div class="autocomplete" style="width:300px;">
+					<input id="myInput" type="text" name="myCountry" placeholder="Country">
+				</div>
+			</form>
+		
+		
 			<div id="buttons">
 				<button id="addfields">Add more ingredient fields</button>
 				<button id="searchbutton">Search</button>
@@ -47,7 +56,9 @@
         </main>
 		
 		<template id="searchfield">
-			<input class="ingredientsearchfield" type="text" placeholder="Enter an ingredient"></input>
+			<div class="autocomplete" style="width:400px;">
+				<input id="myInput" type="text" placeholder="Enter an ingredient"></input>
+			</div>
         </template>
 		
 		<template id="recipe">

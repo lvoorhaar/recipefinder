@@ -56,19 +56,14 @@ public class DBconnect {
         System.out.println(found);
         
         List<Recipe> recipes = query.find().toList();*/
-        
         //List<String> list = Arrays.asList("all purpose flour","butter","powdered sugar");
-        
         //Query<Recipe> query = datastore.createQuery(Recipe.class);
-        
         //List<Recipe> recipes = query.filter("preptime <=", 20).asList();
-        
         /*List<Recipe> recipes = datastore.createQuery(Recipe.class)
                 .field("ingredients")
                 .elemMatch(query)
                 .find()
                 .toList();*/
-        
         //String JSONoutput = new Gson().toJson(recipes);
         
         /*db.test1.find().forEach(function(x) {
@@ -81,23 +76,30 @@ public class DBconnect {
             });
         });*/
         
-        //List<Recipe> recipes = query.field("ingredients").sizeEq(3).find().toList();
-        
 
-        //List<Recipe> recipes = query.field("ingredients.name").in(list).find().toList();
-
-        //List<Recipe> recipes = query.search("coconut").asList();
         
         List<String> list = Arrays.asList("all purpose flour","butter","powdered sugar");
         Query<Recipe> query = datastore.createQuery(Recipe.class);
-        //ArrayList<Recipe> recipes = new ArrayList<>();
+        
+        //List<Recipe> recipes = query.field("ingredients").sizeEq(3).find().toList();          // finds all recipes with 3 ingredients
+        //List<Recipe> recipes = query.field("ingredients.name").in(list).find().toList();      // match if only 1 ingredient is in list
+        //List<Recipe> recipes = query.search("coconut").asList();                              // searches in all fields for string
+        //List<Recipe> recipes = query.field("ingredients.name").notIn(list).find().toList();   // opposite of what I want, finds all recipes that dont contain any ingredients from list
+        //List<Recipe> recipes = query.filter("ingredients.name all", list).find().toList();    // match if all items from list are in ingredients
+        //List<Recipe> recipes = query.filter("ingredients.name in", list).find().toList();     // match if only 1 ingredient is in list
+        //List<Recipe> recipes = query.filter("ingredients.name all in", list).find().toList(); // no results
+        //List<Recipe> recipes = query.filter("ingredients.name forEach in", list).find().toList(); // no results
+        //List<Recipe> recipes = query.field("ingredients.name").not().notIn(list).find().toList(); // match if only 1 ingredient is in list
         
         
-        //List<Recipe> recipes = query.field("ingredients.name").notIn(list).find().toList();
+        //Query<Recipe> query2 = query.field("ingredients.name").in(list);
         
-        List<Recipe> recipes = query.filter("ingredients.name all", list).find().toList();
-
+        //List<Recipe> recipes = query.field("ingredients.name").elemMatch(query).find().toList();
+        
+        List<Recipe> recipes = query.field("ingredients.name").in(list).find().toList();
+                
         System.out.println(recipes);
+        System.out.println(recipes.size());
     }
     
 }

@@ -24,4 +24,13 @@ public class RecipeSearchTest {
         String name = recipes.get(0).getName();
         Assert.assertEquals(name, "3 Ingredient Shortbread Cookies");
     }
+    
+    @Test
+    public void testShortbreadCookiesWithWater() {
+        List<String> ingredients = Arrays.asList("all purpose flour","butter","powdered sugar", "water");
+        RecipeSearch search = new RecipeSearch(ingredients);
+        List<Recipe> recipes = search.findRecipes();
+        String name = recipes.get(0).getName();
+        Assert.assertEquals(name, "3 Ingredient Shortbread Cookies");
+    }
 }

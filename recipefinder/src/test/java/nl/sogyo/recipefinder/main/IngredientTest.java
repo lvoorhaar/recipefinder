@@ -41,7 +41,7 @@ public class IngredientTest {
         Assert.assertFalse(sugar.matches(ingredients));
     }
     
-    /*@Test
+    @Test
     public void testLetters() {
         Ingredient sugar = new Ingredient();
         sugar.setName("sugar");
@@ -49,5 +49,15 @@ public class IngredientTest {
         ingredients.add("ugar");
         ingredients.add("s");
         Assert.assertFalse(sugar.matches(ingredients));
-    }*/
+    }
+    
+    @Test
+    public void testPeanutButter() {
+        Ingredient peanutButter = new Ingredient();
+        peanutButter.setName("peanut butter");
+        ArrayList<String> ingredients = new ArrayList<>();
+        ingredients.add("butter");
+        ingredients.add("peanut");
+        Assert.assertFalse(peanutButter.matches(ingredients));
+    }
 }

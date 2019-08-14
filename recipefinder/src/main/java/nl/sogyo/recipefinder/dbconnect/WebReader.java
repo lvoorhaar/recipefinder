@@ -71,17 +71,13 @@ public class WebReader {
             Ingredient i = new Ingredient();
             if (!e.getElementsByClass("wprm-recipe-ingredient-amount").isEmpty()) {
                 i.setAmount(e.getElementsByClass("wprm-recipe-ingredient-amount").get(0).text().trim());
-            } else {
-                i.setAmount("1");
             }
             if (!e.getElementsByClass("wprm-recipe-ingredient-unit").isEmpty()) {
                 i.setUnit(e.getElementsByClass("wprm-recipe-ingredient-unit").get(0).text().trim());
-            } else {
-                i.setUnit("(number)");
             }
             String ingredientName = e.getElementsByClass("wprm-recipe-ingredient-name").get(0).text().trim();
             if (!e.getElementsByClass("wprm-recipe-ingredient-notes").isEmpty()) {
-                ingredientName += e.getElementsByClass("wprm-recipe-ingredient-notes").get(0).text().trim();
+                i.setNotes(e.getElementsByClass("wprm-recipe-ingredient-notes").get(0).text());
             }
             i.setName(ingredientName);
             ingredients.add(i);
