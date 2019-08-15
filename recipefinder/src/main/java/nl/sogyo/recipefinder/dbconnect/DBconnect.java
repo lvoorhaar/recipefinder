@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
+import com.mongodb.client.MongoCursor;
 import dev.morphia.Datastore;
 import dev.morphia.Morphia;
 import dev.morphia.query.Query;
@@ -36,48 +37,6 @@ public class DBconnect {
         Datastore datastore = morphia.createDatastore(new MongoClient(), "recipes");
         datastore.ensureIndexes();
         
-        
-        /*List<String> list = Arrays.asList("1","g","sugar");
-        Ingredient ingredient = new Ingredient(list);
-        ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
-        ingredients.add(ingredient);
-        
-        Recipe testRecipe = new Recipe("test", new ArrayList<Category>(Arrays.asList(Category.BREAKFAST)), 5, 1, "blabla", ingredients);
-        datastore.save(testRecipe);*/
-        
-        /*Query<Recipe> query = datastore.createQuery(Recipe.class);
-
-        long number = query.count();
-
-        System.out.println(number);
-        
-        Recipe found = query.first();
-        
-        System.out.println(found);
-        
-        List<Recipe> recipes = query.find().toList();*/
-        //List<String> list = Arrays.asList("all purpose flour","butter","powdered sugar");
-        //Query<Recipe> query = datastore.createQuery(Recipe.class);
-        //List<Recipe> recipes = query.filter("preptime <=", 20).asList();
-        /*List<Recipe> recipes = datastore.createQuery(Recipe.class)
-                .field("ingredients")
-                .elemMatch(query)
-                .find()
-                .toList();*/
-        //String JSONoutput = new Gson().toJson(recipes);
-        
-        /*db.test1.find().forEach(function(x) {
-            x.array.forEach(function(y) {
-                if (y.name instanceof Array) {
-                    y.name.forEach(function(z) {
-                        print(z.name);
-                    });
-                }
-            });
-        });*/
-        
-
-        
         List<String> list = Arrays.asList("all purpose flour","butter","powdered sugar");
         Query<Recipe> query = datastore.createQuery(Recipe.class);
         
@@ -90,16 +49,16 @@ public class DBconnect {
         //List<Recipe> recipes = query.filter("ingredients.name all in", list).find().toList(); // no results
         //List<Recipe> recipes = query.filter("ingredients.name forEach in", list).find().toList(); // no results
         //List<Recipe> recipes = query.field("ingredients.name").not().notIn(list).find().toList(); // match if only 1 ingredient is in list
-        
-        
-        //Query<Recipe> query2 = query.field("ingredients.name").in(list);
-        
         //List<Recipe> recipes = query.field("ingredients.name").elemMatch(query).find().toList();
         
-        List<Recipe> recipes = query.field("ingredients.name").in(list).find().toList();
-                
-        System.out.println(recipes);
-        System.out.println(recipes.size());
+        //List<Recipe> recipes = query.field("ingredients.name").in(list).find().toList();       
+        //System.out.println(recipes);
+        //System.out.println(recipes.size());
+        
+        MongoCursor<String> values = datastore.getDatabase().getCollection("recipes-testdb").distinct("ingredients.name", String.class).iterator();
+        
+        System.out.println(values.toString());
+        
     }
     
 }

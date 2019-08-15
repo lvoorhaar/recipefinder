@@ -37,7 +37,6 @@ public class RecipeSearch {
         datastore.ensureIndexes();
         this.query = datastore.createQuery(Recipe.class);
         this.addObviousIngredients();
-        //this.recipeCollection = new RecipeCollection();
     }
     
     public RecipeSearch(List<String> ingredients, List<Category> categories) {
@@ -53,7 +52,7 @@ public class RecipeSearch {
     }
     
     private void addObviousIngredients() {
-        //this.ingredients.add("water");
+        this.ingredients.add("water");
     }
     
     public List<Recipe> findRecipes() {
