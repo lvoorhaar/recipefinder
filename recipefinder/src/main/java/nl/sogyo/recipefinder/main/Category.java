@@ -19,7 +19,7 @@ public enum Category {
     DINNER("dinner"),
     SNACKS("snacks"),
     DESSERT("dessert"),
-    UNKNOWN("unknown");
+    OTHER("other");
     
     private final String name;
     

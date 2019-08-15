@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="8" failures="0" name="nl.sogyo.recipefinder.main.ConverterTest" time="0.006" errors="0" skipped="0">
+<testsuite tests="8" failures="0" name="nl.sogyo.recipefinder.main.ConverterTest" time="0.007" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_144\jre\bin"/>
@@ -69,8 +69,8 @@
   <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testTenOz" time="0"/>
   <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testwoAndQuarterToDouble" time="0"/>
   <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testHalfTsp" time="0"/>
-  <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testOneAndAHalfTbsp" time="0"/>
-  <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testQuarterCup" time="0.001"/>
+  <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testOneAndAHalfTbsp" time="0.002"/>
+  <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testQuarterCup" time="0"/>
   <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testOneToDouble" time="0"/>
   <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testHalfToDouble" time="0"/>
 </testsuite>

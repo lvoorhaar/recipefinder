@@ -41,7 +41,7 @@ public class WebReader {
             Elements categoryElements = doc.getElementsByClass("wprm-recipe-course");
             categories.add(Category.valueOf(categoryElements.get(0).text().trim().toUpperCase()));
         } catch (Exception e) {
-            categories.add(Category.valueOf("UNKNOWN"));
+            categories.add(Category.valueOf("OTHER"));
         }
 
         Elements timeElements = doc.getElementsByClass("wprm-recipe-time");

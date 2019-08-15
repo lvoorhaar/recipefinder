@@ -7,12 +7,15 @@
         <title>Recipe Finder</title>
         <meta name="description" content="Recipe search engine">
 
-        <link rel="stylesheet" href="style/main.css">
+        <link rel="stylesheet" href="style/add.css">
 		
 		<link rel="icon" href="img/favicon.ico">
+		
+		<script src="src/add.js"></script>
+		
     </head>
 
-    <body>
+    <body onload="loadAddPage();">
 
         <header id="logo-header">
             <img src="img/logo.png">
@@ -36,8 +39,39 @@
 
         <main>
 
-            
-
+			<div id="inputfields">
+				<div>Enter recipe information below to add a new recipe to the database.</div>
+				<div>Name: <input id="nameinput" type="text" placeholder="Enter name of recipe" required></div>
+				<div>Categories: <div id="categoriesinput"></div></div>
+				<div>Rating:
+					<div id="ratinginput">
+					<div><input type="radio" name="rating" value="0"> 0 (no rating)</div>
+					<div><input type="radio" name="rating" value="1"> 1 (bad)</div>
+					<div><input type="radio" name="rating" value="2"> 2 (meh)</div>
+					<div><input type="radio" name="rating" value="3"> 3 (okay)</div>
+					<div><input type="radio" name="rating" value="4"> 4 (good)</div>
+					<div><input type="radio" name="rating" value="5"> 5 (great)</div>
+					</div>
+				</div>
+				<div>Preparation time: <input id="preptimeinput" type="number" min="0"> minutes</div>
+				<div>Ingredients: <ul id="ingredientsinput"></ul></div>
+				<div><button id="addfields">Add more ingredient fields</button></div>
+				<div><textarea id="instructionsinput" type="text" placeholder="Enter instructions here"></textarea></div>
+				<div><button id="addnewrecipe">Add recipe to database</button></div>
+			</div>
+			
         </main>
+		
+		<template id="ingredientinputfields">
+			<input class="ingredientamountinput" type="text" placeholder="Amount">
+			<div class="autocomplete">
+				<input class="ingredientunitinput" type="text" placeholder="Unit">
+			</div>
+			<div class="autocomplete">
+				<input class="ingredientnameinput" type="text" placeholder="Ingredient name">
+			</div>
+			<br>
+        </template>
+		
     </body>
 </html>

@@ -6,6 +6,7 @@
 package nl.sogyo.recipefinder.api;
 
 import com.google.gson.Gson;
+import java.util.Collections;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -34,6 +35,7 @@ public class RecipeLoader {
         HttpSession session = request.getSession(true);
         RecipeCollection recipeCollection = new RecipeCollection();
         List<Recipe> recipes = recipeCollection.getRecipes();
+        Collections.shuffle(recipes);
         
         String output = new Gson().toJson(recipes);
 

@@ -1,0 +1,172 @@
+body {
+    font-family: 'Lato', sans-serif;
+    padding: 0px;
+    margin: 0px;
+
+    --primary-color: rgb(254, 131, 8);
+    --accent-color: rgb(63, 72, 104);
+    --text-color: rgb(107, 107, 107);
+}
+
+#mainheader {
+    font-size: 2.5rem;
+    color: white;
+	position: fixed;
+	margin-top: 15px;
+	width: 100%;
+	text-align: center;
+	z-index: 2;
+}
+
+#logo-header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+	position: fixed;
+	margin-top: 0px;
+	width: 100%;
+	background-color: var(--primary-color);
+	z-index: 1;
+}
+
+#logo-header img {
+    margin-left: 30px;
+}
+
+main {
+    padding: 160px 20px 25px;
+}
+
+nav {
+    height: 2rem;
+    line-height: 2rem;
+	position: fixed;
+	margin-top: 70px;
+	width: 100%;
+	text-align: center;
+	color: white;
+	z-index: 2;
+}
+
+a:link {
+	color: white;
+}
+
+a:visited {
+	color: white;
+}
+
+a:hover {
+	color: var(--accent-color);
+}
+
+a:active {
+	color: var(--accent-color);
+}
+
+#inputfields {
+	display: grid;
+	grid-template-columns: 800px;
+	grid-row-gap: 15px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 40px;
+	width: 800px;
+}
+
+#nameinput {
+	width: 600px;
+	margin: 5px 5px 5px;
+	padding: 2px 2px 2px;
+}
+
+#categoriesinput {
+	padding: 2px 2px 2px;
+	display: grid;
+	grid-template-columns: auto auto auto auto;
+}
+
+#ratinginput {
+	display: grid;
+	grid-template-columns: auto auto auto auto auto auto;
+	margin: 5px 5px 5px;
+	padding: 2px 2px 2px;
+}
+
+#preptimeinput {
+	width: 50px;
+	margin: 5px 5px 5px;
+	padding: 2px 2px 2px;
+}
+
+.ingredientamountinput {
+	width: 50px;
+	margin: 5px 5px 5px;
+	padding: 2px 2px 2px;
+}
+
+.ingredientunitinput {
+	width: 50px;
+	margin: 5px 5px 5px;
+	padding: 2px 2px 2px;
+}
+
+.ingredientnameinput {
+	width: 400px;
+	margin: 5px 5px 5px;
+	padding: 2px 2px 2px;
+}
+
+#instructionsinput {
+	width: 700px;
+	height: 500px;
+	margin: 5px 5px 5px;
+	padding: 2px 2px 2px;
+	font-family: 'Lato', sans-serif;
+	line-height: 120%;
+}
+
+#addfields {
+	width: 200px;
+	padding: 2px 2px 2px;
+	margin: 5px 5px 5px;
+}
+
+#addnewrecipe {
+	width: 200px;
+	padding: 2px 2px 2px;
+	margin: 5px 5px 5px;
+}
+
+.autocomplete {
+	position: relative;
+	display: inline-block;
+}
+
+.autocomplete-items {
+	position: absolute;
+	border: 0;
+	z-index: 99;
+	top: 100%;
+	left: 0;
+	right: 0;
+}
+
+.autocomplete-items div {
+	padding: 2px 2px 2px;
+	cursor: pointer;
+	background-color: #fff; 
+	border: 1px solid #f1f1f1; 
+	margin-left: 5px;
+	margin-right: 5px;
+	width: 100% - 14px;
+}
+
+.autocomplete-items div:hover {
+	background-color: #e9e9e9; 
+}
+
+.autocomplete-active {
+	background-color: DodgerBlue !important; 
+	color: #ffffff; 
+}

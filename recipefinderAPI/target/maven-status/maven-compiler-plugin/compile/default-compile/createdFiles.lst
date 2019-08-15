@@ -1,3 +1,4 @@
 nl\sogyo\recipefinder\api\IngredientLoader.class
 nl\sogyo\recipefinder\api\RecipeLoader.class
+nl\sogyo\recipefinder\api\CategoryLoader.class
 nl\sogyo\recipefinder\api\RecipeSearcher.class
