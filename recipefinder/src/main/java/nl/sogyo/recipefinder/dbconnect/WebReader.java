@@ -75,11 +75,11 @@ public class WebReader {
             if (!e.getElementsByClass("wprm-recipe-ingredient-unit").isEmpty()) {
                 i.setUnit(e.getElementsByClass("wprm-recipe-ingredient-unit").get(0).text().trim());
             }
-            String ingredientName = e.getElementsByClass("wprm-recipe-ingredient-name").get(0).text().trim();
+            String ingredientName = e.getElementsByClass("wprm-recipe-ingredient-name").get(0).text().trim().toLowerCase();
+            i.setName(ingredientName);
             if (!e.getElementsByClass("wprm-recipe-ingredient-notes").isEmpty()) {
                 i.setNotes(e.getElementsByClass("wprm-recipe-ingredient-notes").get(0).text());
             }
-            i.setName(ingredientName);
             ingredients.add(i);
         }
 
@@ -89,8 +89,11 @@ public class WebReader {
     }
 
     public static void main(String[] args) throws Exception {
+        
+        String weblink = "no link";
 
-        Recipe importedRecipe = WebReader.getRecipeFromWebsite("no link");
+        Recipe importedRecipe = WebReader.getRecipeFromWebsite(weblink);
+        importedRecipe.setSource(weblink);
 
         System.out.println(importedRecipe);
 

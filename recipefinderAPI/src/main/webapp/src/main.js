@@ -39,7 +39,7 @@ function search() {
 			ingredient = field.value;
 			ingredients.push(ingredient);
 		} else {
-			parentField.removeChild(field);
+			parentField.removeChild(field.parentNode);
 		}
 	}
 	resultFields = document.getElementById("recipes");
@@ -49,7 +49,7 @@ function search() {
 	searchPOST(ingredients);
 }
 
-function addSearchFields() {
+async function addSearchFields() {
 	template = document.getElementById("searchfield");
 	fieldDiv = document.getElementById("searchfields");
 	for (i = 0; i < 10; i++) {
@@ -57,6 +57,7 @@ function addSearchFields() {
 		fieldDiv.appendChild(newNode);
 	}
 	ingredientsearchfields = document.getElementsByClassName("ingredientsearchfield");
+	suggestedIngredients = await loadIngredients();
 	for (field of ingredientsearchfields) {
 		autocomplete(field, suggestedIngredients);
 	}
@@ -163,7 +164,23 @@ function creatNodes(recipeList) {
 }
 
 
-var suggestedIngredients = ["butter", "sugar","peanut butter"];
+async function loadIngredients() {
+	try {
+		response = await fetch("api/loadingredients",  {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                }
+            });
+		console.log("fetching ingredients...");
+		ingredientList = await response.json();
+		return ingredientList;
+	} catch (error) {
+		console.error(error);
+	}
+}
+
 
 /* copied code */
 function autocomplete(inp, arr) {

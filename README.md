@@ -1,4 +1,6 @@
-This program needs Java SE Development Kit 8 and Apache Maven installed.
+Install Java SE Development Kit 8 from https://www.oracle.com/technetwork/java/javase/downloads/index.html.
+
+Install Apache Maven 3.6.1 from https://maven.apache.org/download.cgi and set path variable (https://maven.apache.org/install.html).
 
 Install MongoDB Community Server (version 4.0.12) from https://www.mongodb.com/download-center/community.
 
@@ -13,4 +15,4 @@ Type 'mvn clean package' in the command line, press Enter.
 When build is complete, type 'mvn jetty:run' in the command line, press Enter.
 Leave this window open and start your browser.
 Go to 'http://localhost/recipefinder/'
-The app should work from here.
+The app should work from here. You won't see any recipes if the database is empty.

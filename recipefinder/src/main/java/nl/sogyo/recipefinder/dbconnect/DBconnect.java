@@ -57,7 +57,11 @@ public class DBconnect {
         
         MongoCursor<String> values = datastore.getDatabase().getCollection("recipes-testdb").distinct("ingredients.name", String.class).iterator();
         
-        System.out.println(values.toString());
+        while (values.hasNext()) {
+            System.out.println(values.next());
+        }
+        
+        
         
     }
     

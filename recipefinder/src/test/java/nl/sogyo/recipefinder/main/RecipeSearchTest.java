@@ -17,7 +17,7 @@ import org.junit.Test;
 public class RecipeSearchTest {
     @Test
     public void testShortbreadCookies() {
-        List<String> ingredients = Arrays.asList("all purpose flour","butter","powdered sugar");
+        List<String> ingredients = Arrays.asList("all-purpose flour","butter","powdered sugar");
         RecipeSearch search = new RecipeSearch(ingredients);
         List<Recipe> recipes = search.findRecipes();
         String name = recipes.get(0).getName();
@@ -26,7 +26,7 @@ public class RecipeSearchTest {
     
     @Test
     public void testShortbreadCookiesWithWater() {
-        List<String> ingredients = Arrays.asList("all purpose flour","butter","powdered sugar", "water");
+        List<String> ingredients = Arrays.asList("all-purpose flour","butter","powdered sugar", "water");
         RecipeSearch search = new RecipeSearch(ingredients);
         List<Recipe> recipes = search.findRecipes();
         String name = recipes.get(0).getName();

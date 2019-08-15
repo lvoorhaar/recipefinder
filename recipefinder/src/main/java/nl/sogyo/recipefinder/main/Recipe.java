@@ -32,6 +32,7 @@ public class Recipe {
     private int rating;
     private String instructions;
     private List<Ingredient> ingredients;
+    private String source;
     
     public Recipe() {}
 
@@ -146,6 +147,14 @@ public class Recipe {
 
     void setIngredients(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
     
     
