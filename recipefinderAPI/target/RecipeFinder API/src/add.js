@@ -6,7 +6,7 @@ function loadAddPage() {
 
 function addEventListerners() {
 	addButton = document.getElementById("addnewrecipe");
-	addButton.addEventListener("click", addRecipe);
+	addButton.addEventListener("click", createRecipe);
 	addFieldsButton = document.getElementById("addfields");
 	addFieldsButton.addEventListener("click", addIngredientInputFields);
 }
@@ -79,8 +79,26 @@ async function addCategoryCheckboxes() {
 	}
 }
 
-async function addRecipe() {
+async function createRecipe() {
 	console.log("adding recipe to database...");
+}
+
+async function sendToDatabase(recipe) {
+	try {
+		response = await fetch("api/addrecipe",  {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+			body: JSON.stringify(recipe)
+            });
+		console.log("sending recipe to database...");
+		check = await response.json();
+		console.log(await check);
+	} catch (error) {
+		console.error(error);
+	}
 }
 
 var unitOptions = ['cm','cup','cups','g','inch','ml','oz','pinch','tbsp','tsp']

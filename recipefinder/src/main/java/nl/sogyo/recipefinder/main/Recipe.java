@@ -57,9 +57,22 @@ public class Recipe {
         }
         
         this.ingredients = new ArrayList<>();
-        for (ArrayList<String> ingredient : (ArrayList<ArrayList<String>>)document.get("ingredients")) {
-            this.ingredients.add(new Ingredient(ingredient));
-        }
+        
+        /*for (Map<String, String> currentIngredient : ((Map<String, Map<String, String>>)document.get("ingredients"))). {
+            Ingredient i = new Ingredient();
+            if (!currentIngredient.get("amount") != null) {
+                i.setAmount("");
+            }
+            if () {
+                i.setUnit("");
+            }
+            String ingredientName = "";
+            i.setName(ingredientName);
+            if () {
+                i.setNotes("");
+            }
+            this.ingredients.add(i);
+        }*/
     }
     
     @Override
