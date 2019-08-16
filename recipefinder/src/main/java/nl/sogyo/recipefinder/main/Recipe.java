@@ -47,32 +47,34 @@ public class Recipe {
     
     public Recipe(Map<String, Object> document) {
         this.name = (String)document.get("name");
-        this.preptime = (Integer)document.get("preptime");
-        this.rating = (Integer)document.get("rating");
+        this.preptime = Integer.parseInt((String)document.get("preptime"));
+        this.rating = Integer.parseInt((String)document.get("rating"));
         this.instructions = (String)document.get("instructions");
         
         this.categories = new ArrayList<>();
-        for (String category : (ArrayList<String>)document.get("category")) {
+        ArrayList<String> categories = (ArrayList<String>)document.get("categories");
+        for (String category : categories) {
             this.categories.add(Category.valueOf(category.toUpperCase()));
         }
         
         this.ingredients = new ArrayList<>();
-        
-        /*for (Map<String, String> currentIngredient : ((Map<String, Map<String, String>>)document.get("ingredients"))). {
+        ArrayList<Object> ingredients = (ArrayList<Object>)document.get("ingredients");
+        for (Object ingredient : ingredients) {
+            Map<String, String> currentIngredient = (Map<String, String>)ingredient;
             Ingredient i = new Ingredient();
-            if (!currentIngredient.get("amount") != null) {
-                i.setAmount("");
+            i.setName(currentIngredient.get("name"));
+            if (currentIngredient.get("amount") != null) {
+                i.setAmount(currentIngredient.get("amount"));
             }
-            if () {
-                i.setUnit("");
+            if (currentIngredient.get("unit") != null) {
+                i.setUnit(currentIngredient.get("unit"));
             }
-            String ingredientName = "";
-            i.setName(ingredientName);
-            if () {
-                i.setNotes("");
+            if (currentIngredient.get("notes") != null) {
+                i.setNotes(currentIngredient.get("notes"));
             }
             this.ingredients.add(i);
-        }*/
+        }
+        
     }
     
     @Override

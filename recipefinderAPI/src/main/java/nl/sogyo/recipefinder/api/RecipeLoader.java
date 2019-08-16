@@ -31,7 +31,7 @@ public class RecipeLoader {
     public Response loadRecipes(
             @Context HttpServletRequest request) {
 
-        System.out.println("received fetch call");
+        System.out.println("received fetch recipes call");
         HttpSession session = request.getSession(true);
         RecipeCollection recipeCollection = new RecipeCollection();
         List<Recipe> recipes = recipeCollection.getRecipes();

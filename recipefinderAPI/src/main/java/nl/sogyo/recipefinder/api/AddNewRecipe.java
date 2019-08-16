@@ -9,8 +9,6 @@ import com.google.gson.Gson;
 import com.mongodb.MongoClient;
 import dev.morphia.Datastore;
 import dev.morphia.Morphia;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -22,7 +20,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import nl.sogyo.recipefinder.main.Recipe;
-import nl.sogyo.recipefinder.main.RecipeSearch;
 
 /**
  *
@@ -49,7 +46,7 @@ public class AddNewRecipe {
         Recipe newRecipe = new Recipe(recipeDetails);
         datastore.save(newRecipe);
         
-        String output = "recipe added succesfully";
+        String output = new Gson().toJson("recipe added succesfully");
 
         return Response.status(200).entity(output).build();
     }

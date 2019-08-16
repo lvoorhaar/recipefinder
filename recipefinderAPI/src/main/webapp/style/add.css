@@ -75,7 +75,7 @@ a:active {
 }
 
 #nameinput {
-	width: 600px;
+	width: 700px;
 	margin: 5px 5px 5px;
 	padding: 2px 2px 2px;
 }
@@ -99,6 +99,10 @@ a:active {
 	padding: 2px 2px 2px;
 }
 
+ul {
+    padding-inline-start: 0px;
+}
+
 .ingredientamountinput {
 	width: 50px;
 	margin: 5px 5px 5px;
@@ -112,7 +116,13 @@ a:active {
 }
 
 .ingredientnameinput {
-	width: 400px;
+	width: 300px;
+	margin: 5px 5px 5px;
+	padding: 2px 2px 2px;
+}
+
+.ingredientnotesinput {
+	width: 300px;
 	margin: 5px 5px 5px;
 	padding: 2px 2px 2px;
 }

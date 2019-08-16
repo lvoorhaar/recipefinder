@@ -12,7 +12,6 @@ import dev.morphia.Datastore;
 import dev.morphia.Morphia;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.GET;
@@ -21,8 +20,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import nl.sogyo.recipefinder.main.Recipe;
-import nl.sogyo.recipefinder.main.RecipeCollection;
 
 /**
  *

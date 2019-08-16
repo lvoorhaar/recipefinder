@@ -163,7 +163,6 @@ function creatNodes(recipeList) {
 	addEventListernersRecipe();
 }
 
-
 async function loadIngredients() {
 	try {
 		response = await fetch("api/loadingredients",  {

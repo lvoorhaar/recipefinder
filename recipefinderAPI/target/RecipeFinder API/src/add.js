@@ -6,7 +6,7 @@ function loadAddPage() {
 
 function addEventListerners() {
 	addButton = document.getElementById("addnewrecipe");
-	addButton.addEventListener("click", createRecipe);
+	addButton.addEventListener("click", validateInput);
 	addFieldsButton = document.getElementById("addfields");
 	addFieldsButton.addEventListener("click", addIngredientInputFields);
 }
@@ -72,18 +72,90 @@ async function addCategoryCheckboxes() {
 		fieldDiv.appendChild(newDiv);
 		checkbox = document.createElement("input");
 		checkbox.type = "checkbox";
+		checkbox.className = "category";
 		checkbox.name = category;
 		newDiv.appendChild(checkbox);
-		description = document.createTextNode(category)
+		description = document.createTextNode(" " + category)
 		newDiv.appendChild(description);
 	}
 }
 
-async function createRecipe() {
-	console.log("adding recipe to database...");
+function validateInput() {
+	rcpname = document.getElementById("nameinput").value;
+	if (!rcpname) {
+		alert("Please fill in a name for the recipe.");
+	} else {
+		createRecipe();
+	}
 }
 
-async function sendToDatabase(recipe) {
+function createRecipe() {
+	rcpname = document.getElementById("nameinput").value;
+	
+	rcpcategories = new Array();
+	categoryButtons = document.getElementsByClassName("category")
+	for (i = 0; i < categoryButtons.length; i++) {
+		if (categoryButtons[i].checked) {
+			rcpcategories.push(categoryButtons[i].name);
+		}
+	}
+	if (rcpcategories.length == 0) rcpcategories.push("other");
+	
+	rcprating = "0";
+	ratingButtons = document.getElementsByName("rating");
+	for (i = 0; i < ratingButtons.length; i++) {
+		if (ratingButtons[i].checked) {
+			rcprating  = ratingButtons[i].value;
+			break;
+		}
+	}
+
+	rcppreptime = document.getElementById("preptimeinput").value;
+	if (rcppreptime < 0 || !rcppreptime) rcppreptime = "0";
+	
+	rcpingredients = new Array();
+	ingredientNameFields = document.getElementsByClassName("ingredientnameinput");
+	ingredientAmountFields = document.getElementsByClassName("ingredientamountinput");
+	ingredientUnitFields = document.getElementsByClassName("ingredientunitinput");
+	ingredientNotesFields = document.getElementsByClassName("ingredientnotesinput");
+	for (i = 0; i < ingredientNameFields.length; i++) {
+		if (ingredientNameFields[i].value.length > 0) {
+			ingrName = ingredientNameFields[i].value;
+			ingrAmount = ingredientAmountFields[i].value;
+			ingrUnit = ingredientUnitFields[i].value;
+			ingrNotes = ingredientNotesFields[i].value;
+			currIngredient = {
+				name: ingrName,
+				amount: ingrAmount,
+				unit: ingrUnit,
+				notes: ingrNotes,
+			}
+			rcpingredients.push(currIngredient);
+		}
+	}
+	if (rcpingredients.length == 0) {
+		currIngredient = {
+				name: "No ingredients",
+		}
+		rcpingredients.push(currIngredient);
+	}
+	
+	rcpinstructions = document.getElementById("instructionsinput").value;
+	rcpinstructions = rcpinstructions.replace(/(?:\r\n|\r|\n)/g, '<br>');
+	if (rcpinstructions.length < 1 || !rcpinstructions) rcpinstructions = "No instructions";
+	
+	recipe = { 
+        name: rcpname,
+        categories: rcpcategories,
+        rating: rcprating,
+        preptime: rcppreptime,
+        ingredients: rcpingredients,
+        instructions: rcpinstructions,
+    }
+	sendRecipeToDatabase(recipe);
+}
+
+async function sendRecipeToDatabase(recipe) {
 	try {
 		response = await fetch("api/addrecipe",  {
             method: 'POST',
@@ -105,87 +177,58 @@ var unitOptions = ['cm','cup','cups','g','inch','ml','oz','pinch','tbsp','tsp']
 
 /* copied code */
 function autocomplete(inp, arr) {
-  /*the autocomplete function takes two arguments,
-  the text field element and an array of possible autocompleted values:*/
   var currentFocus;
-  /*execute a function when someone writes in the text field:*/
   inp.addEventListener("input", function(e) {
       var a, b, i, val = this.value;
-      /*close any already open lists of autocompleted values*/
       closeAllLists();
       if (!val) { return false;}
       currentFocus = -1;
-      /*create a DIV element that will contain the items (values):*/
       a = document.createElement("DIV");
       a.setAttribute("id", this.id + "autocomplete-list");
       a.setAttribute("class", "autocomplete-items");
-      /*append the DIV element as a child of the autocomplete container:*/
       this.parentNode.appendChild(a);
-      /*for each item in the array...*/
       for (i = 0; i < arr.length; i++) {
-        /*check if the item starts with the same letters as the text field value:*/
         if (arr[i].toLowerCase().includes(val.toLowerCase())) {
-          /*create a DIV element for each matching element:*/
           b = document.createElement("DIV");
           b.innerHTML = arr[i];
-          /*insert a input field that will hold the current array item's value:*/
           b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-          /*execute a function when someone clicks on the item value (DIV element):*/
           b.addEventListener("click", function(e) {
-              /*insert the value for the autocomplete text field:*/
               inp.value = this.getElementsByTagName("input")[0].value;
-              /*close the list of autocompleted values,
-              (or any other open lists of autocompleted values:*/
               closeAllLists();
           });
           a.appendChild(b);
         }
       }
   });
-  /*execute a function presses a key on the keyboard:*/
   inp.addEventListener("keydown", function(e) {
       var x = document.getElementById(this.id + "autocomplete-list");
       if (x) x = x.getElementsByTagName("div");
       if (e.keyCode == 40) {
-        /*If the arrow DOWN key is pressed,
-        increase the currentFocus variable:*/
         currentFocus++;
-        /*and and make the current item more visible:*/
         addActive(x);
       } else if (e.keyCode == 38) { //up
-        /*If the arrow UP key is pressed,
-        decrease the currentFocus variable:*/
         currentFocus--;
-        /*and and make the current item more visible:*/
         addActive(x);
       } else if (e.keyCode == 13) {
-        /*If the ENTER key is pressed, prevent the form from being submitted,*/
         e.preventDefault();
         if (currentFocus > -1) {
-          /*and simulate a click on the "active" item:*/
           if (x) x[currentFocus].click();
         }
       }
   });
   function addActive(x) {
-    /*a function to classify an item as "active":*/
     if (!x) return false;
-    /*start by removing the "active" class on all items:*/
     removeActive(x);
     if (currentFocus >= x.length) currentFocus = 0;
     if (currentFocus < 0) currentFocus = (x.length - 1);
-    /*add class "autocomplete-active":*/
     x[currentFocus].classList.add("autocomplete-active");
   }
   function removeActive(x) {
-    /*a function to remove the "active" class from all autocomplete items:*/
     for (var i = 0; i < x.length; i++) {
       x[i].classList.remove("autocomplete-active");
     }
   }
   function closeAllLists(elmnt) {
-    /*close all autocomplete lists in the document,
-    except the one passed as an argument:*/
     var x = document.getElementsByClassName("autocomplete-items");
     for (var i = 0; i < x.length; i++) {
       if (elmnt != x[i] && elmnt != inp) {
@@ -193,7 +236,6 @@ function autocomplete(inp, arr) {
       }
     }
   }
-  /*execute a function when someone clicks in the document:*/
   document.addEventListener("click", function (e) {
       closeAllLists(e.target);
   });
