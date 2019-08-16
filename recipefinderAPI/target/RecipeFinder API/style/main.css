@@ -202,6 +202,90 @@ article {
 	margin: 5px 5px 5px;
 }
 
+#inputfields {
+	display: grid;
+	grid-template-columns: 800px;
+	grid-row-gap: 15px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 40px;
+	width: 800px;
+}
+
+#nameinput {
+	width: 700px;
+	margin: 5px 5px 5px;
+	padding: 2px 2px 2px;
+}
+
+#categoriesinput {
+	padding: 2px 2px 2px;
+	display: grid;
+	grid-template-columns: auto auto auto auto;
+}
+
+#ratinginput {
+	display: grid;
+	grid-template-columns: auto auto auto auto auto auto;
+	margin: 5px 5px 5px;
+	padding: 2px 2px 2px;
+}
+
+#preptimeinput {
+	width: 50px;
+	margin: 5px 5px 5px;
+	padding: 2px 2px 2px;
+}
+
+#ingredientsinput {
+    padding-inline-start: 0px;
+}
+
+.ingredientamountinput {
+	width: 50px;
+	margin: 5px 5px 5px;
+	padding: 2px 2px 2px;
+}
+
+.ingredientunitinput {
+	width: 50px;
+	margin: 5px 5px 5px;
+	padding: 2px 2px 2px;
+}
+
+.ingredientnameinput {
+	width: 300px;
+	margin: 5px 5px 5px;
+	padding: 2px 2px 2px;
+}
+
+.ingredientnotesinput {
+	width: 300px;
+	margin: 5px 5px 5px;
+	padding: 2px 2px 2px;
+}
+
+#instructionsinput {
+	width: 100%;
+	height: 500px;
+	margin: 5px 5px 5px;
+	padding: 5px 5px 5px;
+	font-family: 'Lato', sans-serif;
+	line-height: 130%;
+	resize: none;
+}
+
+#addfields {
+	width: 200px;
+	padding: 2px 2px 2px;
+	margin: 5px 5px 5px;
+}
+
+#addnewrecipe {
+	width: 200px;
+	padding: 2px 2px 2px;
+	margin: 5px 5px 5px;
+}
 
 .autocomplete {
 	position: relative;
@@ -224,7 +308,7 @@ article {
 	border: 1px solid #f1f1f1; 
 	margin-left: 5px;
 	margin-right: 5px;
-	width: 400px;
+	width: 100% - 14px;
 }
 
 .autocomplete-items div:hover {

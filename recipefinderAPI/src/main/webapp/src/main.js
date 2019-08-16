@@ -7,11 +7,24 @@ function loadBrowsePage() {
 	loadRecipes();
 }
 
+function loadAddPage() {
+	addIngredientInputFields();
+	addCategoryCheckboxes();
+	addEventListernersAdd();
+}
+
 function addEventListernersSearch() {
 	searchButton = document.getElementById("searchbutton");
 	searchButton.addEventListener("click", search);
 	addFieldsButton = document.getElementById("addfields");
 	addFieldsButton.addEventListener("click", addSearchFields);
+}
+
+function addEventListernersAdd() {
+	addButton = document.getElementById("addnewrecipe");
+	addButton.addEventListener("click", validateInput);
+	addFieldsButton = document.getElementById("addfields");
+	addFieldsButton.addEventListener("click", addIngredientInputFields);
 }
 
 function addEventListernersRecipe() {
@@ -163,6 +176,25 @@ function creatNodes(recipeList) {
 	addEventListernersRecipe();
 }
 
+async function addIngredientInputFields() {
+	template = document.getElementById("ingredientinputfields");
+	fieldDiv = document.getElementById("ingredientsinput");
+	addButton = document.getElementById("addfields");
+	for (i = 0; i < 10; i++) {
+		newNode = template.content.cloneNode(true);
+		fieldDiv.appendChild(newNode);
+	}
+	ingredientInputFields = document.getElementsByClassName("ingredientnameinput");
+	suggestedIngredients = await loadIngredients();
+	for (field of ingredientInputFields) {
+		autocomplete(field, suggestedIngredients);
+	}
+	unitInputFields = document.getElementsByClassName("ingredientunitinput");
+	for (field of unitInputFields) {
+		autocomplete(field, unitOptions);
+	}
+}
+
 async function loadIngredients() {
 	try {
 		response = await fetch("api/loadingredients",  {
@@ -180,6 +212,133 @@ async function loadIngredients() {
 	}
 }
 
+async function loadCategories() {
+	try {
+		response = await fetch("api/loadcategories",  {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                }
+            });
+		console.log("fetching categories...");
+		categoryList = await response.json();
+		return categoryList;
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+async function addCategoryCheckboxes() {
+	fieldDiv = document.getElementById("categoriesinput");
+	categories = await loadCategories();
+	for (category of categories) {
+		newDiv = document.createElement("div");
+		fieldDiv.appendChild(newDiv);
+		checkbox = document.createElement("input");
+		checkbox.type = "checkbox";
+		checkbox.className = "category";
+		checkbox.name = category;
+		newDiv.appendChild(checkbox);
+		description = document.createTextNode(" " + category)
+		newDiv.appendChild(description);
+	}
+}
+
+var unitOptions = ['cm','cup','cups','g','inch','ml','oz','pinch','tbsp','tsp']
+
+function validateInput() {
+	rcpname = document.getElementById("nameinput").value;
+	if (!rcpname) {
+		alert("Please fill in a name for the recipe.");
+	} else {
+		createRecipe();
+	}
+}
+
+function createRecipe() {
+	rcpname = document.getElementById("nameinput").value;
+	
+	rcpcategories = new Array();
+	categoryButtons = document.getElementsByClassName("category")
+	for (i = 0; i < categoryButtons.length; i++) {
+		if (categoryButtons[i].checked) {
+			rcpcategories.push(categoryButtons[i].name);
+		}
+	}
+	if (rcpcategories.length == 0) rcpcategories.push("other");
+	
+	rcprating = "0";
+	ratingButtons = document.getElementsByName("rating");
+	for (i = 0; i < ratingButtons.length; i++) {
+		if (ratingButtons[i].checked) {
+			rcprating  = ratingButtons[i].value;
+			break;
+		}
+	}
+
+	rcppreptime = document.getElementById("preptimeinput").value;
+	if (rcppreptime < 0 || !rcppreptime) rcppreptime = "0";
+	
+	rcpingredients = new Array();
+	ingredientNameFields = document.getElementsByClassName("ingredientnameinput");
+	ingredientAmountFields = document.getElementsByClassName("ingredientamountinput");
+	ingredientUnitFields = document.getElementsByClassName("ingredientunitinput");
+	ingredientNotesFields = document.getElementsByClassName("ingredientnotesinput");
+	for (i = 0; i < ingredientNameFields.length; i++) {
+		if (ingredientNameFields[i].value.length > 0) {
+			ingrName = ingredientNameFields[i].value;
+			ingrAmount = ingredientAmountFields[i].value;
+			ingrUnit = ingredientUnitFields[i].value;
+			ingrNotes = ingredientNotesFields[i].value;
+			currIngredient = {
+				name: ingrName,
+				amount: ingrAmount,
+				unit: ingrUnit,
+				notes: ingrNotes,
+			}
+			rcpingredients.push(currIngredient);
+		}
+	}
+	if (rcpingredients.length == 0) {
+		currIngredient = {
+				name: "No ingredients",
+		}
+		rcpingredients.push(currIngredient);
+	}
+	
+	rcpinstructions = document.getElementById("instructionsinput").value;
+	rcpinstructions = rcpinstructions.replace(/(?:\r\n|\r|\n)/g, '<br>');
+	if (rcpinstructions.length < 1 || !rcpinstructions) rcpinstructions = "No instructions";
+	
+	recipe = { 
+        name: rcpname,
+        categories: rcpcategories,
+        rating: rcprating,
+        preptime: rcppreptime,
+        ingredients: rcpingredients,
+        instructions: rcpinstructions,
+    }
+	sendRecipeToDatabase(recipe);
+}
+
+async function sendRecipeToDatabase(recipe) {
+	try {
+		response = await fetch("api/addrecipe",  {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+			body: JSON.stringify(recipe)
+            });
+		console.log("sending recipe to database...");
+		check = await response.json();
+		console.log(await check);
+	} catch (error) {
+		console.error(error);
+	}
+}
 
 /* copied code */
 function autocomplete(inp, arr) {
