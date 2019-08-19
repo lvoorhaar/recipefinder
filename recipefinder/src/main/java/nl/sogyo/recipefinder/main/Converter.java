@@ -21,6 +21,8 @@ public class Converter {
     }
     
     public static String convertToSIUnits(String amount, String unit) {
+        String newAount;
+        String newUnit;
         if (unit.toLowerCase().contains("tsp") || unit.toLowerCase().contains("teaspoon")) {
             return String.format("%.2f", fractionToDouble(amount) * 5) + " ml";
         } else if (unit.toLowerCase().contains("tbsp") || unit.toLowerCase().contains("tablespoon")) {
