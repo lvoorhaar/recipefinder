@@ -167,7 +167,21 @@ article {
 	padding-bottom: 30px;
 }
 
+#searchgrid {
+	display: grid;
+	grid-template-columns: 400px 450px 220px;
+	width: 1070px;
+	margin-left: auto;
+	margin-right: auto;
+	
+}
+
+#searchoptions {
+	grid-column: 1;
+}
+
 #searchfields {
+	grid-column: 2;
 	display: grid;
 	grid-template-columns: 420px;
 	margin-left: auto;
@@ -183,21 +197,23 @@ article {
 }
 
 #buttons {
+	margin-top: 50px;
+	grid-column: 3;
 	display: grid;
-	grid-template-columns: 230px;
-	position: absolute;
-	margin-top: 0px;
-	margin-left: 70%;
+	grid-template-columns: 220px;
+	height: 80px;
 }
 
 #addfields {
 	width: 200px;
+	height: 23px;
 	padding: 2px 2px 2px;
 	margin: 5px 5px 5px;
 }
 
 #searchbutton {
 	width: 200px;
+	height: 23px;
 	padding: 2px 2px 2px;
 	margin: 5px 5px 5px;
 }

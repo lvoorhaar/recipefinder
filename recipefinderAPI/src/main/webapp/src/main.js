@@ -1,6 +1,7 @@
 function loadSearchPage() {
 	addSearchFields();
 	addEventListernersSearch();
+	addCategoryCheckboxes();
 }
 
 function loadBrowsePage() {
@@ -44,6 +45,17 @@ function addEventListernersRecipe() {
 }
 
 function search() {
+	ingredients = getSearchIngredients();
+	categories = getCategories();
+	maxPreptime = getPreptime();
+	resultFields = document.getElementById("recipes");
+	while (resultFields.firstChild) {
+		resultFields.removeChild(resultFields.firstChild);
+	}
+	searchPOST(ingredients);
+}
+
+function getSearchIngredients() {
 	inputFields = document.querySelectorAll(".ingredientsearchfield");
 	parentField = document.getElementById("searchfields");
 	ingredients = [];
@@ -55,11 +67,7 @@ function search() {
 			parentField.removeChild(field.parentNode);
 		}
 	}
-	resultFields = document.getElementById("recipes");
-	while (resultFields.firstChild) {
-		resultFields.removeChild(resultFields.firstChild);
-	}
-	searchPOST(ingredients);
+	return ingredients;
 }
 
 async function addSearchFields() {
@@ -256,9 +264,7 @@ function validateInput() {
 	}
 }
 
-function createRecipe() {
-	rcpname = document.getElementById("nameinput").value;
-	
+function getCategories() {
 	rcpcategories = new Array();
 	categoryButtons = document.getElementsByClassName("category")
 	for (i = 0; i < categoryButtons.length; i++) {
@@ -267,6 +273,19 @@ function createRecipe() {
 		}
 	}
 	if (rcpcategories.length == 0) rcpcategories.push("other");
+	return rcpcategories;
+}
+
+function getPreptime() {
+	rcppreptime = document.getElementById("preptimeinput").value;
+	if (rcppreptime < 0 || !rcppreptime) rcppreptime = "0";
+	return rcppreptime;
+}
+
+function createRecipe() {
+	rcpname = document.getElementById("nameinput").value;
+	
+	rcpcategories = getCategories();
 	
 	rcprating = "0";
 	ratingButtons = document.getElementsByName("rating");
@@ -277,8 +296,7 @@ function createRecipe() {
 		}
 	}
 
-	rcppreptime = document.getElementById("preptimeinput").value;
-	if (rcppreptime < 0 || !rcppreptime) rcppreptime = "0";
+	rcppreptime = getPreptime();
 	
 	rcpingredients = new Array();
 	ingredientNameFields = document.getElementsByClassName("ingredientnameinput");

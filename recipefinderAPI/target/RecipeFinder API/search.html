@@ -38,13 +38,23 @@
         </nav>
 
         <main>
-		<div id="toptext">Enter the ingredients that you would like to use: <br></div>
-
-			<div id="buttons">
-				<button id="addfields">Add more ingredient fields</button>
-				<button id="searchbutton">Search</button>
+		
+			<div id="searchgrid">
+				<div id="searchoptions">
+					<div>Categories: <div id="categoriesinput">
+						<div><input type="checkbox" class="category" name="all" checked="true"> all</div>
+					</div></div>
+					<br>
+					<div>Maximum preparation time: <input id="preptimeinput" type="number" min="0"> minutes</div>
+				</div>
+				<div id="searchfields">
+					<div id="toptext">Enter the ingredients that you would like to use: <br></div>
+				</div>
+				<div id="buttons">
+					<button id="addfields">Add more ingredient fields</button>
+					<button id="searchbutton">Search</button>
+				</div>
 			</div>
-			<div id="searchfields"></div>
 			<div id="recipes"></div>
         </main>
 		
