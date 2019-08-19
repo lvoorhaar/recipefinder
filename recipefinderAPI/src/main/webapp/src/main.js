@@ -259,17 +259,20 @@ async function loadCategories() {
 async function addCategoryCheckboxes() {
 	fieldDiv = document.getElementById("categoriesinput");
 	categories = await loadCategories();
+	template = document.getElementById("categorycheckboxes");
 	for (category of categories) {
-		newDiv = document.createElement("div");
-		fieldDiv.appendChild(newDiv);
-		checkbox = document.createElement("input");
-		checkbox.type = "checkbox";
-		checkbox.className = "category";
+		newNode = template.content.cloneNode(true);
+		checkbox = newNode.querySelector(".category");
 		checkbox.name = category;
-		newDiv.appendChild(checkbox);
+		fieldDiv.appendChild(newNode);
 		description = document.createTextNode(" " + category.toLowerCase());
-		newDiv.appendChild(description);
+		checkbox.parentElement.appendChild(description);
 	}
+}
+
+function uncheckAllCheckbox() {
+    allcheckbox = document.getElementById("allcheckbox");
+    allcheckbox.checked = false;
 }
 
 var unitOptions = ['cm','cup','cups','g','inch','ml','oz','pinch','tbsp','tsp']

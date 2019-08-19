@@ -42,7 +42,7 @@
 			<div id="searchgrid">
 				<div id="searchoptions">
 					<div>Categories: <div id="categoriesinput">
-						<div><input type="checkbox" class="category" name="all" checked="true"> all</div>
+						<div><input type="checkbox" class="category" name="all" checked="true" id="allcheckbox"> all</div>
 					</div></div>
 					<br>
 					<div>Maximum preparation time: <input id="preptimeinput" type="number" min="0"> minutes</div>
@@ -62,6 +62,10 @@
 			<div class="autocomplete">
 				<input class="ingredientsearchfield" type="text" placeholder="Enter an ingredient">
 			</div>
+        </template>
+		
+		<template id="categorycheckboxes">
+			<div><input type="checkbox" class="category" onchange="uncheckAllCheckbox()"></div>
         </template>
 		
 		<template id="recipe">
