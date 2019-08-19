@@ -50,8 +50,9 @@ public class Ingredient {
             return true;
         } else if (this.name.equals(ingredient.toLowerCase().trim())) {
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
     
     public boolean matches(List<String> ingredients) {

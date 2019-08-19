@@ -17,7 +17,7 @@ import org.junit.Test;
  */
 public class RecipeTest {
     @Test
-    public void testRecipe1() {
+    public void testRecipeMatches() {
         Recipe recipe = new Recipe();
         ArrayList<Ingredient> ingredients = new ArrayList<>();
         Ingredient sugar = new Ingredient();
@@ -32,6 +32,42 @@ public class RecipeTest {
         recipe.setIngredients(ingredients);
         List<String> testIngredients = Arrays.asList("butter","flour","sugar");
         Assert.assertTrue(recipe.matchesIngredients(testIngredients));
+    }
+    
+    @Test
+    public void testMatchScore100() {
+        Recipe recipe = new Recipe();
+        ArrayList<Ingredient> ingredients = new ArrayList<>();
+        Ingredient sugar = new Ingredient();
+        sugar.setName("sugar");
+        ingredients.add(sugar);
+        Ingredient butter = new Ingredient();
+        butter.setName("butter");
+        ingredients.add(butter);
+        Ingredient flour = new Ingredient();
+        flour.setName("flour");
+        ingredients.add(flour);
+        recipe.setIngredients(ingredients);
+        List<String> testIngredients = Arrays.asList("butter","flour","sugar");
+        Assert.assertEquals(100, recipe.getMatchScore(testIngredients), 0.1);
+    }
+    
+    @Test
+    public void testMatchScore33() {
+        Recipe recipe = new Recipe();
+        ArrayList<Ingredient> ingredients = new ArrayList<>();
+        Ingredient sugar = new Ingredient();
+        sugar.setName("sugar");
+        ingredients.add(sugar);
+        Ingredient butter = new Ingredient();
+        butter.setName("butter");
+        ingredients.add(butter);
+        Ingredient flour = new Ingredient();
+        flour.setName("flour");
+        ingredients.add(flour);
+        recipe.setIngredients(ingredients);
+        List<String> testIngredients = Arrays.asList("sugar");
+        Assert.assertEquals(33.33, recipe.getMatchScore(testIngredients), 0.1);
     }
     
 }

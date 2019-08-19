@@ -108,18 +108,17 @@ public class Recipe {
         return true;
     }
     
-    boolean matchesCategories(List<Category> searchCategories) {
-        return false;
+    public Double getMatchScore(List<String> searchIngredients) {
+        Double score = 0.0;
+        double pieces = 100.0 / this.ingredients.size();
+        for (Ingredient ingredient : this.ingredients) {
+            if (ingredient.matches(searchIngredients)) {
+                score += pieces;
+            }
+        }
+        return score;
     }
     
-    boolean matchesPreptime(int searchPreptime) {
-        return false;
-    }
-    
-    boolean matchesSearch(List<Ingredient> searchIngredients, List<Category> searchCategories, int searchPreptime) {
-        return false;
-    }
-
     String getName() {
         return name;
     }
@@ -171,6 +170,6 @@ public class Recipe {
     public void setSource(String source) {
         this.source = source;
     }
-    
+
     
 }

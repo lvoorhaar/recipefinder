@@ -10,6 +10,8 @@ import dev.morphia.Datastore;
 import dev.morphia.Morphia;
 import dev.morphia.query.Query;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -21,7 +23,6 @@ public class RecipeSearch {
     private List<String> categories;
     private int maxPreptime;
     private List<String> ingredients;
-    //private RecipeCollection recipeCollection;
     private Morphia morphia;
     private Datastore datastore;
     private Query<Recipe> query;
@@ -36,7 +37,6 @@ public class RecipeSearch {
         this.datastore = morphia.createDatastore(new MongoClient(), "recipes");
         datastore.ensureIndexes();
         this.query = datastore.createQuery(Recipe.class);
-        this.addObviousIngredients();
     }
     
     public RecipeSearch(List<String> ingredients, List<String> categories) {
@@ -57,10 +57,6 @@ public class RecipeSearch {
         this.query = this.query.field("preptime").lessThanOrEq(maxPreptime).field("categories").in(categories);
     }
     
-    private void addObviousIngredients() {
-        this.ingredients.add("water");
-    }
-    
     public List<Recipe> findRecipes() {
         List<Recipe> searchedRecipes = query.field("ingredients.name").in(this.ingredients).find().toList();
         ArrayList<Recipe> matchingRecipes = new ArrayList<>();
@@ -72,8 +68,12 @@ public class RecipeSearch {
         return matchingRecipes;
     }
     
-    public ArrayList<Recipe> sortRecipes() {
-        return null;
+    public List<Recipe> sortRecipes() {
+        List<Recipe> recipes = query.field("ingredients.name").in(this.ingredients).find().toList();
+        RecipeComparator recipeComparator = new RecipeComparator(this.ingredients);
+        Collections.sort(recipes, recipeComparator.reversed());
+        return recipes;
     }
-    
+
+
 }
