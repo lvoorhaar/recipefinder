@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
@@ -32,14 +33,30 @@ public class RecipeSearcher {
     @Produces(MediaType.APPLICATION_JSON)
     public Response searchRecipes(
             @Context HttpServletRequest request,
-            String[] ingredientArray) {
+            Map<String, Object> searchDetails) {
 
         System.out.println("received search request");
         HttpSession session = request.getSession(true);
         
-        List<String> ingredientList = Arrays.asList(ingredientArray);
+        ArrayList<String> ingredients = (ArrayList<String>)searchDetails.get("ingredients");
+        ArrayList<String> categories = (ArrayList<String>)searchDetails.get("categories");
+        int maxPreptime = Integer.parseInt((String)searchDetails.get("maxPreptime"));
         
-        RecipeSearch search = new RecipeSearch(ingredientList);
+        RecipeSearch search;
+        if (categories.contains("all")) {
+            if (maxPreptime > 0) {
+                search = new RecipeSearch(ingredients, maxPreptime);
+            } else {
+                search = new RecipeSearch(ingredients);
+            }
+        } else {
+            if (maxPreptime > 0) {
+                search = new RecipeSearch(ingredients, categories, maxPreptime);
+            } else {
+                search = new RecipeSearch(ingredients, categories);
+            }
+        }
+        
         List<Recipe> recipes = search.findRecipes();
         
         String output = new Gson().toJson(recipes);

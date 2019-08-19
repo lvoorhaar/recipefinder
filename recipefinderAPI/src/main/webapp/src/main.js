@@ -45,14 +45,19 @@ function addEventListernersRecipe() {
 }
 
 function search() {
-	ingredients = getSearchIngredients();
-	categories = getCategories();
-	maxPreptime = getPreptime();
+	searchIngredients = getSearchIngredients();
+	searchCategories = getCategories();
+	searchMaxPreptime = getPreptime();
 	resultFields = document.getElementById("recipes");
 	while (resultFields.firstChild) {
 		resultFields.removeChild(resultFields.firstChild);
 	}
-	searchPOST(ingredients);
+	searchDetails = {
+		ingredients: searchIngredients,
+		categories: searchCategories,
+		maxPreptime: searchMaxPreptime,
+	}
+	searchPOST(searchDetails);
 }
 
 function getSearchIngredients() {
@@ -84,7 +89,7 @@ async function addSearchFields() {
 	}
 }
 
-async function searchPOST(ingredients) {
+async function searchPOST(searchDetails) {
 	try {
 		response = await fetch("api/searchrecipes",  {
             method: 'POST',
@@ -92,7 +97,7 @@ async function searchPOST(ingredients) {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
                 },
-			body: JSON.stringify(ingredients)
+			body: JSON.stringify(searchDetails)
             });
 		console.log("searching recipes...");
 		recipeList = await response.json();
@@ -120,9 +125,17 @@ async function loadRecipes() {
 }
 
 function creatNodes(recipeList) {
-	template = document.getElementById("recipe");
 	recipesDiv = document.getElementById("recipes");
 
+	if (recipeList.length == 0) {
+		newDiv = document.createElement("div");
+		newDiv.className = "noRecipes";
+		recipesDiv.appendChild(newDiv);
+		description = document.createTextNode("No recipes were found  :-(");
+		newDiv.appendChild(description);
+	} else {
+
+	template = document.getElementById("recipe");
 	for (recipe of recipeList) {
 
 		newNode = template.content.cloneNode(true);
@@ -182,6 +195,7 @@ function creatNodes(recipeList) {
 	}
 
 	addEventListernersRecipe();
+	}
 }
 
 async function addIngredientInputFields() {
@@ -248,7 +262,7 @@ async function addCategoryCheckboxes() {
 		checkbox.className = "category";
 		checkbox.name = category;
 		newDiv.appendChild(checkbox);
-		description = document.createTextNode(" " + category)
+		description = document.createTextNode(" " + category.toLowerCase());
 		newDiv.appendChild(description);
 	}
 }

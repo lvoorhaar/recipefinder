@@ -335,3 +335,9 @@ article {
 	background-color: DodgerBlue !important; 
 	color: #ffffff; 
 }
+
+.noRecipes {
+	text-align: center;
+	font-weight: bold;
+	margin-top: 100px;
+}

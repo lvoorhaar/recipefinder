@@ -55,13 +55,22 @@ public class DBconnect {
         //System.out.println(recipes);
         //System.out.println(recipes.size());
         
-        MongoCursor<String> values = datastore.getDatabase().getCollection("recipes-testdb").distinct("ingredients.name", String.class).iterator();
+        //MongoCursor<String> values = datastore.getDatabase().getCollection("recipes-testdb").distinct("ingredients.name", String.class).iterator();
         
-        while (values.hasNext()) {
-            System.out.println(values.next());
-        }
+        //while (values.hasNext()) {
+        //    System.out.println(values.next());
+        //}
+        
+        //List<Recipe> recipes = query.field("preptime").lessThanOrEq(15).find().toList();        //find all recipes with preptime of max 15 min
+        
+        List<String> categories = Arrays.asList("COOKIES");
+        //List<Recipe> recipes = query.field("categories").in(categories).find().toList();    //find all recipes of matching categories
+        
+        List<Recipe> recipes = query.field("categories").in(categories).field("preptime").lessThanOrEq(15).find().toList(); //two search criteria
         
         
+        System.out.println(recipes);
+        System.out.println(recipes.size());
         
     }
     

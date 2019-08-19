@@ -18,9 +18,9 @@ import java.util.List;
  */
 public class RecipeSearch {
     
-    private List<Category> categories;
+    private List<String> categories;
     private int maxPreptime;
-    private ArrayList<String> ingredients;
+    private List<String> ingredients;
     //private RecipeCollection recipeCollection;
     private Morphia morphia;
     private Datastore datastore;
@@ -39,16 +39,22 @@ public class RecipeSearch {
         this.addObviousIngredients();
     }
     
-    public RecipeSearch(List<String> ingredients, List<Category> categories) {
-        
+    public RecipeSearch(List<String> ingredients, List<String> categories) {
+        this(ingredients);
+        this.categories = categories;
+        this.query = this.query.field("categories").in(categories);
     }
     
     public RecipeSearch(List<String> ingredients, int maxPreptime) {
-        
+        this(ingredients);
+        this.maxPreptime = maxPreptime;
+        this.query = this.query.field("preptime").lessThanOrEq(maxPreptime);
     }
     
-    public RecipeSearch(List<String> ingredients, ArrayList<Category> categories, int maxPreptime) {
-        
+    public RecipeSearch(List<String> ingredients, List<String> categories, int maxPreptime) {
+        this(ingredients, categories);
+        this.maxPreptime = maxPreptime;
+        this.query = this.query.field("preptime").lessThanOrEq(maxPreptime).field("categories").in(categories);
     }
     
     private void addObviousIngredients() {

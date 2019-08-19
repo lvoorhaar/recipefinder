@@ -35,7 +35,7 @@ public enum Category {
     public static ArrayList<String> getCategories() {
         ArrayList<String> categories = new ArrayList<>();
         for (Category c : Category.values()) {
-            categories.add(c.toString());
+            categories.add(c.toString().toUpperCase());
         }
         return categories;
     }
