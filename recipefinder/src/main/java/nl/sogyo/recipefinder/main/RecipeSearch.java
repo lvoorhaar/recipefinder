@@ -11,7 +11,6 @@ import dev.morphia.Morphia;
 import dev.morphia.query.Query;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -75,5 +74,10 @@ public class RecipeSearch {
         return recipes;
     }
 
-
+    public List<Recipe> fuzzySortRecipes() {
+        List<Recipe> recipes = query.field("ingredients.name").in(this.ingredients).find().toList();
+        RecipeComparator recipeComparator = new RecipeComparator(this.ingredients);
+        Collections.sort(recipes, recipeComparator.reversed());
+        return recipes;
+    }
 }

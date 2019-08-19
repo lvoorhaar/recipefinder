@@ -7,6 +7,7 @@ package nl.sogyo.recipefinder.main;
 
 import java.util.ArrayList;
 import java.util.List;
+import me.xdrop.fuzzywuzzy.FuzzySearch;
 
 /**
  *
@@ -50,9 +51,24 @@ public class Ingredient {
             return true;
         } else if (this.name.equals(ingredient.toLowerCase().trim())) {
             return true;
-        } else {
-            return false;
         }
+        return false;
+    }
+    
+    public int fuzzyMatchOne(String ingredient) {
+        int ratio = FuzzySearch.ratio(this.name, ingredient);
+        return ratio;
+    }
+    
+    public int fuzzyMatchAll(List<String> ingredients) {
+        int matchRatio = 0;
+        for (String ingredient : ingredients) {
+            int ratio = fuzzyMatchOne(ingredient);
+            if (ratio > matchRatio) {
+                matchRatio = ratio;
+            }
+        }
+        return matchRatio;
     }
     
     public boolean matches(List<String> ingredients) {

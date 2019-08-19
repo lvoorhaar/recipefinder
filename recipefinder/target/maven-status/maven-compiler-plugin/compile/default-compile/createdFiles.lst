@@ -8,3 +8,4 @@ nl\sogyo\recipefinder\main\Ingredient.class
 nl\sogyo\recipefinder\main\RecipeComparator.class
 nl\sogyo\recipefinder\dbconnect\DBconnect.class
 nl\sogyo\recipefinder\main\Recipe.class
+nl\sogyo\recipefinder\main\RecipeFuzzyComparator.class

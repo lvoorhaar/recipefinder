@@ -65,10 +65,10 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testTwoCups" time="0.006"/>
+  <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testTwoCups" time="0.009"/>
   <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testTenOz" time="0"/>
   <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testwoAndQuarterToDouble" time="0"/>
-  <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testHalfTsp" time="0.003"/>
+  <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testHalfTsp" time="0"/>
   <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testOneAndAHalfTbsp" time="0"/>
   <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testQuarterCup" time="0"/>
   <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testOneToDouble" time="0"/>

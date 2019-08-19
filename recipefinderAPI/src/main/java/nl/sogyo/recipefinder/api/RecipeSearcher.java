@@ -7,8 +7,6 @@ package nl.sogyo.recipefinder.api;
 
 import com.google.gson.Gson;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -58,7 +56,7 @@ public class RecipeSearcher {
             }
         }
         
-        List<Recipe> recipes = search.sortRecipes();
+        List<Recipe> recipes = search.fuzzySortRecipes();
         
         String output = new Gson().toJson(recipes);
 

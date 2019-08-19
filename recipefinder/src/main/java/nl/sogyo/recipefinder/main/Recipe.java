@@ -119,6 +119,16 @@ public class Recipe {
         return score;
     }
     
+    public Double getFuzzyMatchScore(List<String> searchIngredients) {
+        Double score = 0.0;
+        double pieces = 100.0 / this.ingredients.size();
+        for (Ingredient ingredient : this.ingredients) {
+            int ratio = ingredient.fuzzyMatchAll(searchIngredients);
+            score = ratio * pieces / 100;
+        }
+        return score;
+    }
+    
     String getName() {
         return name;
     }

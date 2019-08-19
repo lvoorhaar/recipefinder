@@ -46,18 +46,23 @@ function addEventListernersRecipe() {
 
 function search() {
 	searchIngredients = getSearchIngredients();
-	searchCategories = getCategories();
-	searchMaxPreptime = getPreptime();
-	resultFields = document.getElementById("recipes");
-	while (resultFields.firstChild) {
-		resultFields.removeChild(resultFields.firstChild);
+	if (searchIngredients.length == 0) {
+		alert("Please fill in some ingredients first. The search will only return recipes that use some of those ingredients.");
+		addSearchFields();
+	} else {
+		searchCategories = getCategories();
+		searchMaxPreptime = getPreptime();
+		resultFields = document.getElementById("recipes");
+		while (resultFields.firstChild) {
+			resultFields.removeChild(resultFields.firstChild);
+		}
+		searchDetails = {
+			ingredients: searchIngredients,
+			categories: searchCategories,
+			maxPreptime: searchMaxPreptime,
+		}
+		searchPOST(searchDetails);
 	}
-	searchDetails = {
-		ingredients: searchIngredients,
-		categories: searchCategories,
-		maxPreptime: searchMaxPreptime,
-	}
-	searchPOST(searchDetails);
 }
 
 function getSearchIngredients() {
