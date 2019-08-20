@@ -58,6 +58,10 @@ public class RecipeSearcher {
         
         List<Recipe> recipes = search.fuzzySortRecipes();
         
+        for (Recipe r : recipes) {
+            r.setStringID(r.getId().toHexString());
+        }
+        
         String output = new Gson().toJson(recipes);
 
         return Response.status(200).entity(output).build();

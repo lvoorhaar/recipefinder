@@ -17,7 +17,7 @@ public enum Category {
     COOKIES("cookies"),
     BREAKFAST("breakfast"),
     DINNER("dinner"),
-    SNACKS("snacks"),
+    SNACK("snack"),
     DESSERT("dessert"),
     OTHER("other");
     

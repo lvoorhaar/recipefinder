@@ -21,6 +21,7 @@ import nl.sogyo.recipefinder.main.Category;
 import nl.sogyo.recipefinder.main.Ingredient;
 import nl.sogyo.recipefinder.main.Recipe;
 import nl.sogyo.recipefinder.main.RecipeCollection;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -63,15 +64,21 @@ public class DBconnect {
         
         //List<Recipe> recipes = query.field("preptime").lessThanOrEq(15).find().toList();        //find all recipes with preptime of max 15 min
         
-        List<String> categories = Arrays.asList("COOKIES");
+        /*List<String> categories = Arrays.asList("COOKIES");
         //List<Recipe> recipes = query.field("categories").in(categories).find().toList();    //find all recipes of matching categories
         
         List<Recipe> recipes = query.field("categories").in(categories).field("preptime").lessThanOrEq(15).find().toList(); //two search criteria
         
-        
         System.out.println(recipes);
-        System.out.println(recipes.size());
+        System.out.println(recipes.size());*/
         
+        ObjectId objectId = new ObjectId("5d4d7b382678a84345254900");
+        
+        query.criteria("_id").equal(objectId);
+        Recipe recipe = query.first();
+        
+        System.out.println(recipe);
+        System.out.println(recipe.getId());
     }
     
 }

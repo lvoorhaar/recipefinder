@@ -30,11 +30,14 @@ public class RecipeCollection {
         this.recipes = query.find().toList();
     }
     
-    public void updateRecipes() {
-        
+    public void getStringIDs() {
+        for (Recipe r : this.recipes) {
+            r.setStringID(r.getId().toHexString());
+        }
     }
     
     public List<Recipe> getRecipes() {
+        this.getStringIDs();
         return this.recipes;
     }
 }

@@ -56,7 +56,12 @@ public class Ingredient {
     }
     
     public int fuzzyMatchOne(String ingredient) {
-        int ratio = FuzzySearch.ratio(this.name, ingredient);
+        int ratio;
+        if (this.notes != null && this.notes.contains("optional")) {
+            ratio = 100;
+        } else {
+            ratio = FuzzySearch.ratio(this.name, ingredient);
+        }
         return ratio;
     }
     

@@ -33,6 +33,7 @@ public class Recipe {
     private String instructions;
     private List<Ingredient> ingredients;
     private String source;
+    private String stringID;
     
     public Recipe() {}
 
@@ -179,6 +180,26 @@ public class Recipe {
 
     public void setSource(String source) {
         this.source = source;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
+
+    public ObjectId getId() {
+        return id;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public String getStringID() {
+        return stringID;
+    }
+
+    public void setStringID(String StringID) {
+        this.stringID = StringID;
     }
 
     

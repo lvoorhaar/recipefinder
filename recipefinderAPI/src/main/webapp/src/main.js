@@ -14,6 +14,12 @@ function loadAddPage() {
 	addEventListernersAdd();
 }
 
+async function loadEditPage() {
+	addCategoryCheckboxes();
+	loadSingleRecipe();
+	addEventListernersEdit();
+}
+
 function addEventListernersSearch() {
 	searchButton = document.getElementById("searchbutton");
 	searchButton.addEventListener("click", search);
@@ -23,7 +29,14 @@ function addEventListernersSearch() {
 
 function addEventListernersAdd() {
 	addButton = document.getElementById("addnewrecipe");
-	addButton.addEventListener("click", validateInput);
+	addButton.addEventListener("click", addRecipeToDatabase);
+	addFieldsButton = document.getElementById("addfields");
+	addFieldsButton.addEventListener("click", addIngredientInputFields);
+}
+
+function addEventListernersEdit() {
+	addButton = document.getElementById("updaterecipe");
+	addButton.addEventListener("click", editRecipe);
 	addFieldsButton = document.getElementById("addfields");
 	addFieldsButton.addEventListener("click", addIngredientInputFields);
 }
@@ -167,12 +180,11 @@ function creatNodes(recipeList) {
 
 		newNode.querySelector(".preptime").textContent += recipe["preptime"] + " minutes";
 
-
 		ingredientsNode = newNode.querySelector(".ingredients");
 		currentIngredientNode = newNode.querySelector(".ingredient");
 
 		ingredients = recipe["ingredients"];
-		i = ingredients.length
+		i = ingredients.length;
 		for (ingredient of ingredients) {
 			ingredientText = "";
 			if (ingredient["amount"]) {
@@ -195,6 +207,10 @@ function creatNodes(recipeList) {
 		}
 
 		newNode.querySelector(".instructions").innerHTML += recipe["instructions"];
+		
+		editlink = newNode.querySelector(".editlink");
+		stringID = recipe["stringID"];
+		editlink.href = "edit.html?" + stringID;
 
 		recipesDiv.appendChild(newNode);
 	}
@@ -206,7 +222,6 @@ function creatNodes(recipeList) {
 async function addIngredientInputFields() {
 	template = document.getElementById("ingredientinputfields");
 	fieldDiv = document.getElementById("ingredientsinput");
-	addButton = document.getElementById("addfields");
 	for (i = 0; i < 10; i++) {
 		newNode = template.content.cloneNode(true);
 		fieldDiv.appendChild(newNode);
@@ -281,8 +296,6 @@ function validateInput() {
 	rcpname = document.getElementById("nameinput").value;
 	if (!rcpname) {
 		alert("Please fill in a name for the recipe.");
-	} else {
-		createRecipe();
 	}
 }
 
@@ -359,10 +372,12 @@ function createRecipe() {
         ingredients: rcpingredients,
         instructions: rcpinstructions,
     }
-	sendRecipeToDatabase(recipe);
+	return recipe;
 }
 
-async function sendRecipeToDatabase(recipe) {
+async function addRecipeToDatabase() {
+	validateInput();
+	recipe = createRecipe();
 	try {
 		response = await fetch("api/addrecipe",  {
             method: 'POST',
@@ -379,6 +394,100 @@ async function sendRecipeToDatabase(recipe) {
 		console.error(error);
 	}
 }
+
+async function loadSingleRecipe() {
+	stringID = window.location.search.substring(1);
+	console.log(stringID);
+	query = "api/loadsinglerecipe/" + stringID;
+	try {
+		response = await fetch(query,  {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                }
+            });
+		console.log("fetching recipe...");
+		recipe = await response.json();
+		fillEditFields(await recipe);
+		console.log(await recipe);
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+async function fillEditFields(recipe) {
+	nameinput = document.getElementById("nameinput");
+	nameinput.value = recipe["name"];
+	
+	categoryinput = document.getElementsByClassName("category");
+	for (field of categoryinput) {
+		if (recipe["categories"].includes(field.name)) {
+			field.checked = true;
+		}
+	}
+	
+	ratinginput = document.getElementsByClassName("radiobutton");
+	for (field of ratinginput) {
+		if (recipe["rating"] == field.value) {
+			field.checked = true;
+		}
+	}
+	
+	preptimeinput = document.getElementById("preptimeinput");
+	preptimeinput.value = recipe["preptime"];
+	
+	ingredients = recipe["ingredients"];
+	template = document.getElementById("ingredientinputfields");
+	fieldDiv = document.getElementById("ingredientsinput");
+	for (i = 0; i < ingredients.length; i++) {
+		newNode = template.content.cloneNode(true);
+		newNode.querySelector(".ingredientamountinput").value = ingredients[i]["amount"] || "";
+		newNode.querySelector(".ingredientunitinput").value = ingredients[i]["unit"] || "";
+		newNode.querySelector(".ingredientnameinput").value = ingredients[i]["name"];
+		newNode.querySelector(".ingredientnotesinput").value = ingredients[i]["notes"] || "";
+		fieldDiv.appendChild(newNode);
+	}
+	ingredientInputFields = document.getElementsByClassName("ingredientnameinput");
+	suggestedIngredients = await loadIngredients();
+	for (field of ingredientInputFields) {
+		autocomplete(field, suggestedIngredients);
+	}
+	unitInputFields = document.getElementsByClassName("ingredientunitinput");
+	for (field of unitInputFields) {
+		autocomplete(field, unitOptions);
+	}
+	
+	instructionsinput = document.getElementById("instructionsinput");
+	instructions = recipe["instructions"];
+	instructionsinput.innerHTML = instructions.replace(/<br\s*[\/]?>/gi, "\n");
+	
+	updateButton = document.getElementById("updaterecipe");
+	updateButton.value = recipe["stringID"];
+}
+
+async function editRecipe() {
+	validateInput();
+	recipe = createRecipe();
+	stringID = document.getElementById("updaterecipe").value;
+	query = "api/updaterecipe/" + stringID;
+	try {
+		response = await fetch(query,  {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+			body: JSON.stringify(recipe)
+            });
+		console.log("sending recipe to database...");
+		check = await response.json();
+		console.log(await check);
+	} catch (error) {
+		console.error(error);
+	}
+}
+
 
 /* copied code */
 function autocomplete(inp, arr) {

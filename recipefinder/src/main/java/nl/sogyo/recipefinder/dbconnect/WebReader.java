@@ -8,14 +8,8 @@ package nl.sogyo.recipefinder.dbconnect;
 import com.mongodb.MongoClient;
 import dev.morphia.Datastore;
 import dev.morphia.Morphia;
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import nl.sogyo.recipefinder.main.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -28,7 +22,7 @@ import org.jsoup.select.Elements;
  */
 public class WebReader {
 
-    public static Recipe getRecipeFromWebsite(String link) throws IOException {
+    public static Recipe getRecipeFromBoldBaking(String link) throws IOException {
         //read HTML from website
         Document doc = Jsoup.connect(link).get();
 
@@ -87,12 +81,70 @@ public class WebReader {
 
         return importedRecipe;
     }
+    
+    public static Recipe getRecipeFromMinimalistBaker(String link) throws IOException {
+        //read HTML from website
+        Document doc = Jsoup.connect(link).get();
+
+        //create recipe
+        Elements nameElements = doc.getElementsByClass("wprm-recipe-name");
+        String name = nameElements.get(0).text();
+
+        ArrayList<Category> categories = new ArrayList<>();
+        try {
+            Elements categoryElements = doc.getElementsByClass("wprm-recipe-course");
+            categories.add(Category.valueOf(categoryElements.get(0).text().trim().toUpperCase()));
+        } catch (Exception e) {
+            categories.add(Category.valueOf("OTHER"));
+        }
+        
+        int preptime;
+        Elements timeElements = doc.getElementsByClass("wprm-recipe-details wprm-recipe-details-minutes wprm-recipe-total_time wprm-recipe-total_time-minutes");
+        if (timeElements.size() == 0) {
+            timeElements = doc.getElementsByClass("wprm-recipe-details wprm-recipe-details-hours wprm-recipe-total_time wprm-recipe-total_time-hours");
+            preptime = Integer.parseInt(timeElements.get(0).text()) * 60;
+        } else {
+            preptime = Integer.parseInt(timeElements.get(0).text());
+        }
+
+        Elements ratingElements = doc.getElementsByClass("wprm-recipe-rating-average");
+        int rating = Integer.parseInt(ratingElements.get(0).text().substring(0, 1));
+
+        String instructions = "";
+        Elements instructionElements = doc.getElementsByClass("wprm-recipe-instruction-text");
+        for (Element e : instructionElements) {
+            instructions += e.text() + "<br><br>";
+        }
+
+        //get ingredients
+        ArrayList<Ingredient> ingredients = new ArrayList<>();
+        Elements ingredientsElements = doc.getElementsByClass("wprm-recipe-ingredient");
+        for (Element e : ingredientsElements) {
+            Ingredient i = new Ingredient();
+            if (!e.getElementsByClass("wprm-recipe-ingredient-amount").isEmpty()) {
+                i.setAmount(e.getElementsByClass("wprm-recipe-ingredient-amount").get(0).text().trim());
+            }
+            if (!e.getElementsByClass("wprm-recipe-ingredient-unit").isEmpty()) {
+                i.setUnit(e.getElementsByClass("wprm-recipe-ingredient-unit").get(0).text().trim());
+            }
+            String ingredientName = e.getElementsByClass("wprm-recipe-ingredient-name").get(0).text().trim().toLowerCase();
+            i.setName(ingredientName);
+            if (!e.getElementsByClass("wprm-recipe-ingredient-notes").isEmpty()) {
+                i.setNotes(e.getElementsByClass("wprm-recipe-ingredient-notes").get(0).text());
+            }
+            ingredients.add(i);
+        }
+
+        Recipe importedRecipe = new Recipe(name, categories, preptime, rating, instructions, ingredients);
+
+        return importedRecipe;
+    }
 
     public static void main(String[] args) throws Exception {
         
-        String weblink = "no link";
+        String weblink = "https://minimalistbaker.com/sheet-pan-meal-curried-sweet-potato-chickpeas/";
 
-        Recipe importedRecipe = WebReader.getRecipeFromWebsite(weblink);
+        Recipe importedRecipe = WebReader.getRecipeFromMinimalistBaker(weblink);
         importedRecipe.setSource(weblink);
 
         System.out.println(importedRecipe);
