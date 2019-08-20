@@ -87,7 +87,9 @@ function getSearchIngredients() {
 			ingredient = field.value;
 			ingredients.push(ingredient);
 		} else {
-			parentField.removeChild(field.parentNode);
+			if (document.querySelectorAll(".ingredientsearchfield").length > 10) {
+				parentField.removeChild(field.parentNode);
+			}
 		}
 	}
 	return ingredients;
@@ -387,11 +389,15 @@ async function addRecipeToDatabase() {
                 },
 			body: JSON.stringify(recipe)
             });
-		console.log("sending recipe to database...");
+		console.log("sending new recipe to database...");
 		check = await response.json();
 		console.log(await check);
+		bottomtext = document.getElementById("bottomtext");
+		bottomtext.textContent = "Recipe added succesfully";
 	} catch (error) {
 		console.error(error);
+		bottomtext = document.getElementById("bottomtext");
+		bottomtext.textContent = "An error occurred";
 	}
 }
 
@@ -410,7 +416,6 @@ async function loadSingleRecipe() {
 		console.log("fetching recipe...");
 		recipe = await response.json();
 		fillEditFields(await recipe);
-		console.log(await recipe);
 	} catch (error) {
 		console.error(error);
 	}
@@ -480,11 +485,15 @@ async function editRecipe() {
                 },
 			body: JSON.stringify(recipe)
             });
-		console.log("sending recipe to database...");
+		console.log("sending update recipe to database...");
 		check = await response.json();
 		console.log(await check);
+		bottomtext = document.getElementById("bottomtext");
+		bottomtext.textContent = "Recipe updated succesfully";
 	} catch (error) {
 		console.error(error);
+		bottomtext = document.getElementById("bottomtext");
+		bottomtext.textContent = "An error occurred";
 	}
 }
 

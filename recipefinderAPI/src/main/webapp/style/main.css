@@ -191,8 +191,8 @@ article {
 
 #searchgrid {
 	display: grid;
-	grid-template-columns: 400px 450px 220px;
-	width: 1070px;
+	grid-template-columns: 450px 450px;
+	width: 900px;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -279,7 +279,7 @@ article {
 }
 
 .ingredientamountinput {
-	width: 50px;
+	width: 60px;
 	margin: 5px 5px 5px;
 	padding: 2px 2px 2px;
 }
@@ -291,7 +291,7 @@ article {
 }
 
 .ingredientnameinput {
-	width: 280px;
+	width: 270px;
 	margin: 5px 5px 5px;
 	padding: 2px 2px 2px;
 }
