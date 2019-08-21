@@ -201,6 +201,7 @@ function creatNodes(recipeList) {
 		recipesDiv.appendChild(newNode);
 	}
 	addEventListernersRecipe();
+	checkToggle();
 	}
 }
 
@@ -508,6 +509,7 @@ function toggleIngredients() {
 	ingredientsUS = document.getElementsByClassName("ingredientus");
 	ingredientsMetric = document.getElementsByClassName("ingredientmetric");
 	if (ingredientsUS[0].style.display === "none") {
+		localStorage.setItem("toggled", "false");
 		for (ingrUS of ingredientsUS) {
 			ingrUS.style.display = "list-item";
 		}
@@ -515,12 +517,19 @@ function toggleIngredients() {
 			ingrM.style.display = "none";
 		}
 	} else {
+		localStorage.setItem("toggled", "true");
 		for (ingrUS of ingredientsUS) {
 			ingrUS.style.display = "none";
 		}
 		for (ingrM of ingredientsMetric) {
 			ingrM.style.display = "list-item";
 		}
+	}
+}
+
+function checkToggle() {
+	if (localStorage.getItem("toggled") && localStorage.getItem("toggled") == "true") {
+		toggleIngredients();
 	}
 }
 
