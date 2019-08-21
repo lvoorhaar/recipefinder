@@ -34,6 +34,8 @@ public class Recipe {
     private List<Ingredient> ingredients;
     private String source;
     private String stringID;
+    private List<Ingredient> ingredientsUS;
+    private List<Ingredient> ingredientsMetric;
     
     public Recipe() {}
 
@@ -202,5 +204,28 @@ public class Recipe {
         this.stringID = StringID;
     }
 
+    public List<Ingredient> getIngredientsUS() {
+        return ingredientsUS;
+    }
+
+    public void setIngredientsUS() {
+        this.ingredientsUS = new ArrayList<>();
+        for (Ingredient i : this.ingredients) {
+            this.ingredientsUS.add(Converter.convertToUSUnits(i));
+        }
+    }
+
+    public List<Ingredient> getIngredientsMetric() {
+        return ingredientsMetric;
+    }
+
+    public void setIngredientsMetric() {
+        this.ingredientsMetric = new ArrayList<>();
+        for (Ingredient i : this.ingredients) {
+            this.ingredientsMetric.add(Converter.convertToMetricUnits(i));
+        }
+    }
+    
+    
     
 }

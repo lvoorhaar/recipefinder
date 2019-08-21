@@ -10,7 +10,6 @@ import com.mongodb.MongoClient;
 import dev.morphia.Datastore;
 import dev.morphia.Morphia;
 import dev.morphia.query.Query;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,14 +29,22 @@ public class RecipeCollection {
         this.recipes = query.find().toList();
     }
     
-    public void getStringIDs() {
+    public void setStringIDs() {
         for (Recipe r : this.recipes) {
             r.setStringID(r.getId().toHexString());
         }
     }
     
+    public void setUnitConversions() {
+        for (Recipe r : this.recipes) {
+            r.setIngredientsMetric();
+            r.setIngredientsUS();
+        }
+    }
+    
     public List<Recipe> getRecipes() {
-        this.getStringIDs();
+        this.setStringIDs();
+        this.setUnitConversions();
         return this.recipes;
     }
 }

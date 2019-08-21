@@ -28,6 +28,13 @@ public class Ingredient {
         this.name = elements.get(2);
     }
     
+    public Ingredient(String amount, String unit, String name, String notes) {
+        this.amount = amount;
+        this.unit = unit;
+        this.name = name;
+        this.notes = notes;
+    }
+    
     @Override
     public String toString() {
         String text = "";
@@ -99,6 +106,22 @@ public class Ingredient {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public String getNotes() {
+        return notes;
     }
     
     

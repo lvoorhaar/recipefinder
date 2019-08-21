@@ -5,48 +5,123 @@
  */
 package nl.sogyo.recipefinder.main;
 
+import java.text.Normalizer;
+
 /**
  *
  * @author lvoorhaar
  */
 public class Converter {
-    
-    public static String convertToImpUnits(String amount, String unit) {
+
+    public static Ingredient convertToUSUnits(Ingredient originalIngredient) {
+        /*String amount = originalIngredient.getAmount();
+        String unit = originalIngredient.getUnit();
+        String name = originalIngredient.getName();
+        String notes = originalIngredient.getNotes();
+        String newAmount;
+        String newUnit;
         if (unit.toLowerCase().contains("ml")) {
             
-        } else if (unit.toLowerCase().contains("g")) {
+        } else if (unit.toLowerCase().contains("dl")) {
             
-        }
-        return amount + " " + unit;
-    }
-    
-    public static String convertToSIUnits(String amount, String unit) {
-        String newAount;
-        String newUnit;
-        if (unit.toLowerCase().contains("tsp") || unit.toLowerCase().contains("teaspoon")) {
-            return String.format("%.2f", fractionToDouble(amount) * 5) + " ml";
-        } else if (unit.toLowerCase().contains("tbsp") || unit.toLowerCase().contains("tablespoon")) {
-            return String.format("%.2f", fractionToDouble(amount) * 15) + " ml";
-        } else if (unit.toLowerCase().contains("cup")) {
-            return String.format("%.2f", fractionToDouble(amount) * 240) + " ml";
-        } else if (unit.toLowerCase().contains("oz") || unit.toLowerCase().contains("ounces")) {
-            return String.format("%.2f", fractionToDouble(amount) * 28.35) + " g";
+        } else if (unit.toLowerCase().contains("l")) {
+            
+        } else if (unit.toLowerCase().contains("kg") || unit.toLowerCase().contains("kilogram")) {
+            
+        } else if (unit.toLowerCase().equals("g") || unit.toLowerCase().contains("gram")) {
+            
         } else {
-            return amount + " " + unit;
+            newAmount = amount;
+            newUnit = unit;
+        }
+        Ingredient newIngredient = new Ingredient();
+        newIngredient.setAmount(newAmount);
+        newIngredient.setUnit(newUnit);
+        newIngredient.setName(name);
+        newIngredient.setNotes(notes);*/
+        return originalIngredient;
+    }
+
+    public static Ingredient convertToMetricUnits(Ingredient originalIngredient) {
+        if (originalIngredient.getAmount() != null && originalIngredient.getUnit() != null) {
+            String amount = originalIngredient.getAmount();
+            String unit = originalIngredient.getUnit();
+            String name = originalIngredient.getName();
+            String notes = originalIngredient.getNotes();
+            String newAmount;
+            String newUnit;
+            if (unit.toLowerCase().contains("tsp") || unit.toLowerCase().contains("teaspoon")) {
+                newAmount = String.format("%.2f", fractionToDouble(amount) * 5);
+                newUnit = "mL";
+            } else if (unit.toLowerCase().contains("tbsp") || unit.toLowerCase().contains("tablespoon")) {
+                newAmount = String.format("%.2f", fractionToDouble(amount) * 15);
+                newUnit = "mL";
+            } else if (unit.toLowerCase().contains("cup")) {
+                newAmount = String.format("%.2f", fractionToDouble(amount) * 240);
+                newUnit = "mL";
+            } else if (unit.toLowerCase().contains("fl") && (unit.toLowerCase().contains("oz") || unit.toLowerCase().contains("ounce"))) {
+                newAmount = String.format("%.2f", fractionToDouble(amount) * 30);
+                newUnit = "mL";
+            } else if (unit.toLowerCase().contains("oz") || unit.toLowerCase().contains("ounce")) {
+                newAmount = String.format("%.2f", fractionToDouble(amount) * 28.35);
+                newUnit = "g";
+            } else if (unit.toLowerCase().contains("inch") && !unit.toLowerCase().contains("pinch")) {
+                newAmount = String.format("%.2f", fractionToDouble(amount) * 2.54);
+                newUnit = "cm";
+            } else {
+                newAmount = amount;
+                newUnit = unit;
+            }
+            Ingredient newIngredient = new Ingredient();
+            newIngredient.setAmount(newAmount);
+            newIngredient.setUnit(newUnit);
+            newIngredient.setName(name);
+            newIngredient.setNotes(notes);
+            return newIngredient;
+        } else {
+            return originalIngredient;
         }
     }
-    
+
     static double fractionToDouble(String amount) {
         double doubleAmount = 0;
-        String[] splitamount = amount.split(" ");
-        for (String s : splitamount) {
-            if (s.contains("/")) {
-                double number = Double.parseDouble(s.split("/")[0]) / Double.parseDouble(s.split("/")[1]);
-                doubleAmount += number;
-            } else {
-                doubleAmount += Double.parseDouble(s);
+        String[] splitamount = amount.trim().split(" ");
+        try {
+            for (String s : splitamount) {
+                if (s.contains("/")) {
+                    String[] fraction = s.split("/");
+                    double number = Double.parseDouble(fraction[0]) / Double.parseDouble(fraction[1]);
+                    doubleAmount += number;
+                } else if (Normalizer.normalize(s, Normalizer.Form.NFKD).contains("\u2044")) {
+                    doubleAmount += Converter.vulgarFractionToDouble(s);
+                } else {
+                    doubleAmount += Double.parseDouble(s);
+                }
             }
+        } catch (NumberFormatException e) {
+            return 1.0;
+        }
+        return doubleAmount;
+    }
+    
+    static double vulgarFractionToDouble(String s) {
+        double doubleAmount = 0;
+        if (s.length() > 1) {
+            char[] vulgarFraction = s.toCharArray();
+            for (char c : vulgarFraction) {
+                if (Normalizer.normalize(String.valueOf(c), Normalizer.Form.NFKD).contains("\u2044")) {
+                    doubleAmount += Converter.vulgarFractionToDouble(String.valueOf(c));
+                } else {
+                    doubleAmount += Double.parseDouble(String.valueOf(c));
+                }
+            }
+        } else {
+            String[] fraction = Normalizer.normalize(s, Normalizer.Form.NFKD).split("\u2044");
+            double number = Double.parseDouble(fraction[0]) / Double.parseDouble(fraction[1]);
+            doubleAmount += number;
         }
         return doubleAmount;
     }
 }
+
+

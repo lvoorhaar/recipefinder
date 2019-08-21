@@ -5,6 +5,11 @@
  */
 package nl.sogyo.recipefinder.main;
 
+import com.mongodb.MongoClient;
+import dev.morphia.Datastore;
+import dev.morphia.Morphia;
+import dev.morphia.query.Query;
+import org.bson.types.ObjectId;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -33,31 +38,153 @@ public class ConverterTest {
     
     @Test
     public void testTwoCups() {
-        String result = Converter.convertToSIUnits("2", "cups");
-        Assert.assertEquals("480.00 ml", result);
+        Ingredient water = new Ingredient("2", "cups", "water", null);
+        Ingredient result = Converter.convertToMetricUnits(water);
+        Assert.assertEquals("480.00", result.getAmount());
+        Assert.assertEquals("mL", result.getUnit());
     }
     
     @Test
     public void testQuarterCup() {
-        String result = Converter.convertToSIUnits("1/4", "cup");
-        Assert.assertEquals("60.00 ml", result);
+        Ingredient water = new Ingredient("1/4", "cups", "water", null);
+        Ingredient result = Converter.convertToMetricUnits(water);
+        Assert.assertEquals("60.00", result.getAmount());
+        Assert.assertEquals("mL", result.getUnit());
     }
     
     @Test
     public void testOneAndAHalfTbsp() {
-        String result = Converter.convertToSIUnits("1 1/2", "tbsp");
-        Assert.assertEquals("22.50 ml", result);
+        Ingredient water = new Ingredient("1 1/2", "tbsp", "water", null);
+        Ingredient result = Converter.convertToMetricUnits(water);
+        Assert.assertEquals("22.50", result.getAmount());
+        Assert.assertEquals("mL", result.getUnit());
     }
     
     @Test
     public void testHalfTsp() {
-        String result = Converter.convertToSIUnits("1/2", "tsp");
-        Assert.assertEquals("2.50 ml", result);
+        Ingredient water = new Ingredient("1/2", "tsp", "water", null);
+        Ingredient result = Converter.convertToMetricUnits(water);
+        Assert.assertEquals("2.50", result.getAmount());
+        Assert.assertEquals("mL", result.getUnit());
     }
     
     @Test
     public void testTenOz() {
-        String result = Converter.convertToSIUnits("10", "oz");
-        Assert.assertEquals("283.50 g", result);
+        Ingredient flour = new Ingredient("10", "oz", "flour", null);
+        Ingredient result = Converter.convertToMetricUnits(flour);
+        Assert.assertEquals("283.50", result.getAmount());
+        Assert.assertEquals("g", result.getUnit());
+    }
+    
+    @Test
+    public void testTenFlOz() {
+        Ingredient water = new Ingredient("10", "fl oz", "water", null);
+        Ingredient result = Converter.convertToMetricUnits(water);
+        Assert.assertEquals("300.00", result.getAmount());
+        Assert.assertEquals("mL", result.getUnit());
+    }
+    
+    @Test
+    public void testTenFluidOunce() {
+        Ingredient water = new Ingredient("10", "fluid ounce", "water", null);
+        Ingredient result = Converter.convertToMetricUnits(water);
+        Assert.assertEquals("300.00", result.getAmount());
+        Assert.assertEquals("mL", result.getUnit());
+    }
+    
+    @Test
+    public void testTwoInch() {
+        Ingredient ginger = new Ingredient("2", "inch", "ginger", null);
+        Ingredient result = Converter.convertToMetricUnits(ginger);
+        Assert.assertEquals("5.08", result.getAmount());
+        Assert.assertEquals("cm", result.getUnit());
+    }
+    
+    @Test
+    public void testOnePinch() {
+        Ingredient salt = new Ingredient("1", "pinch", "salt", null);
+        Ingredient result = Converter.convertToMetricUnits(salt);
+        Assert.assertEquals("1", result.getAmount());
+        Assert.assertEquals("pinch", result.getUnit());
+    }
+    
+    @Test
+    public void testPinch() {
+        Ingredient salt = new Ingredient(null, "pinch", "salt", null);
+        Ingredient result = Converter.convertToMetricUnits(salt);
+        Assert.assertEquals(null, result.getAmount());
+        Assert.assertEquals("pinch", result.getUnit());
+    }
+    
+    @Test
+    public void testOneApple() {
+        Ingredient apple = new Ingredient("1", null, "apple", null);
+        Ingredient result = Converter.convertToMetricUnits(apple);
+        Assert.assertEquals("1", result.getAmount());
+        Assert.assertEquals(null, result.getUnit());
+    }
+    
+    @Test
+    public void testEgg() {
+        Ingredient egg = new Ingredient(null, null, "egg", null);
+        Ingredient result = Converter.convertToMetricUnits(egg);
+        Assert.assertEquals(null, result.getAmount());
+        Assert.assertEquals(null, result.getUnit());
+    }
+    
+    @Test
+    public void testThreeQuarterVF() {
+        double result = Converter.fractionToDouble("¾");
+        Assert.assertEquals(0.75, result, 0.01);
+    }
+    
+    @Test
+    public void testOneAndQuarterVF() {
+        double result = Converter.fractionToDouble("1¼");
+        Assert.assertEquals(1.25, result, 0.01);
+    }
+    
+    @Test
+    public void testTwoAndHalfVF() {
+        double result = Converter.fractionToDouble("2 ½");
+        Assert.assertEquals(2.50, result, 0.01);
+    }
+    
+    @Test
+    public void testOneEightVF() {
+        double result = Converter.fractionToDouble("⅛");
+        Assert.assertEquals(0.125, result, 0.01);
+    }
+    
+    @Test
+    public void testOneThirdVF() {
+        double result = Converter.fractionToDouble("⅓");
+        Assert.assertEquals(0.33, result, 0.01);
+    }
+    
+    @Test
+    public void testTwoThirdVF() {
+        double result = Converter.fractionToDouble("⅔");
+        Assert.assertEquals(0.67, result, 0.01);
+    }
+    
+    @Test
+    public void testRecipeWithFractions() {
+        boolean exceptionThrown = false;
+        Morphia morphia = new Morphia();
+        morphia.mapPackage("nl.sogyo.recipefinder.main");
+        Datastore datastore = morphia.createDatastore(new MongoClient(), "recipes");
+        datastore.ensureIndexes();
+        Query<Recipe> query = datastore.createQuery(Recipe.class);
+        ObjectId objectId = new ObjectId("5d4d7b382678a84345254900");
+        query.criteria("_id").equal(objectId);
+        Recipe recipe = query.first();
+        try {
+            recipe.setIngredientsMetric();
+            recipe.setIngredientsUS();
+        } catch (Exception e) {
+            exceptionThrown = true;
+        }
+        Assert.assertFalse(exceptionThrown);
     }
 }
