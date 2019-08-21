@@ -37,6 +37,36 @@ public class ConverterTest {
     }
     
     @Test
+    public void testTwoFractions() {
+        double result = Converter.fractionToDouble("1/4 + 1/16");
+        Assert.assertEquals(0.31, result, 0.01);
+    }
+    
+    @Test
+    public void testTwoFractionsNoSpaces() {
+        double result = Converter.fractionToDouble("1/4+1/16");
+        Assert.assertEquals(0.31, result, 0.01);
+    }
+    
+    @Test
+    public void testAverageValue() {
+        double result = Converter.fractionToDouble("1-2");
+        Assert.assertEquals(1.5, result, 0.01);
+    }
+    
+    @Test
+    public void testAverageValueWithSpaces() {
+        double result = Converter.fractionToDouble(" 1 - 2 ");
+        Assert.assertEquals(1.5, result, 0.01);
+    }
+    
+    @Test
+    public void testAverageValueWithTo() {
+        double result = Converter.fractionToDouble("1 to 2");
+        Assert.assertEquals(1.5, result, 0.01);
+    }
+    
+    @Test
     public void testTwoCups() {
         Ingredient water = new Ingredient("2", "cups", "water", null);
         Ingredient result = Converter.convertToMetricUnits(water);

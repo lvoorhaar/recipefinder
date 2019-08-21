@@ -36,6 +36,7 @@
             <a id="add" href="add.html">
                 Add new recipe
             </a>
+			<button id="toggle" onclick="toggleIngredients()">switch units US/Metric</button>
         </nav>
 
         <main>
@@ -52,7 +53,8 @@
 					<div class="preptime">Preparation time: </div>
 				</div>
 				<ul class="ingredients">Ingredients:
-					<li class="ingredient"></li>
+					<li class="ingredientus"></li>
+					<li class="ingredientmetric"></li>
 				</ul>
 				<div class="instructions"></div>
 				<a class="editlink" href="edit.html">Edit recipe</a>

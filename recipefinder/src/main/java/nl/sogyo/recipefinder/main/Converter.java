@@ -85,21 +85,27 @@ public class Converter {
 
     static double fractionToDouble(String amount) {
         double doubleAmount = 0;
-        String[] splitamount = amount.trim().split(" ");
-        try {
-            for (String s : splitamount) {
-                if (s.contains("/")) {
-                    String[] fraction = s.split("/");
-                    double number = Double.parseDouble(fraction[0]) / Double.parseDouble(fraction[1]);
-                    doubleAmount += number;
-                } else if (Normalizer.normalize(s, Normalizer.Form.NFKD).contains("\u2044")) {
-                    doubleAmount += Converter.vulgarFractionToDouble(s);
-                } else {
-                    doubleAmount += Double.parseDouble(s);
+        if (amount.contains("-") || amount.contains("to")) {
+            doubleAmount = Converter.averageOfTwoValues(amount);
+        } else {
+            String[] splitamount = amount.trim().split(" |\\+");
+            try {
+                for (String s : splitamount) {
+                    if (s.contains("/")) {
+                        String[] fraction = s.split("/");
+                        double number = Double.parseDouble(fraction[0]) / Double.parseDouble(fraction[1]);
+                        doubleAmount += number;
+                    } else if (s == null || s.equals("")) {
+                        continue;
+                    } else if (Normalizer.normalize(s, Normalizer.Form.NFKD).contains("\u2044")) {
+                        doubleAmount += Converter.vulgarFractionToDouble(s);
+                    } else {
+                        doubleAmount += Double.parseDouble(s);
+                    }
                 }
+            } catch (NumberFormatException e) {
+                return 1.0;
             }
-        } catch (NumberFormatException e) {
-            return 1.0;
         }
         return doubleAmount;
     }
@@ -121,6 +127,14 @@ public class Converter {
             doubleAmount += number;
         }
         return doubleAmount;
+    }
+    
+    static double averageOfTwoValues(String s) {
+        String[] splitamount = s.trim().split(" |\\-|to");
+        double first = Converter.fractionToDouble(splitamount[0]);
+        double second = Converter.fractionToDouble(splitamount[splitamount.length - 1]);
+        double average = (first + second) / 2.0;
+        return average;
     }
 }
 

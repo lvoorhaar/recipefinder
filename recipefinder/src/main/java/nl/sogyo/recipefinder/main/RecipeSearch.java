@@ -56,6 +56,7 @@ public class RecipeSearch {
         this.query = this.query.field("preptime").lessThanOrEq(maxPreptime).field("categories").in(categories);
     }
     
+    //returns only exact matches
     public List<Recipe> findRecipes() {
         List<Recipe> searchedRecipes = query.field("ingredients.name").in(this.ingredients).find().toList();
         ArrayList<Recipe> matchingRecipes = new ArrayList<>();
@@ -64,20 +65,33 @@ public class RecipeSearch {
                 matchingRecipes.add(currentRecipe);
             }
         }
+        this.addIDAndConversions(matchingRecipes);
         return matchingRecipes;
     }
     
+    public void addIDAndConversions(List<Recipe> recipes) {
+        for (Recipe r : recipes) {
+            r.setStringID(r.getId().toHexString());
+            r.setIngredientsMetric();
+            r.setIngredientsUS();
+        }
+    }
+    
+    //retuns partial matches, sorts by exact ingredient match
     public List<Recipe> sortRecipes() {
         List<Recipe> recipes = query.field("ingredients.name").in(this.ingredients).find().toList();
         RecipeComparator recipeComparator = new RecipeComparator(this.ingredients);
         Collections.sort(recipes, recipeComparator.reversed());
+        this.addIDAndConversions(recipes);
         return recipes;
     }
-
+    
+    //retuns partial matches, sorts by fuzzy ingredient match
     public List<Recipe> fuzzySortRecipes() {
         List<Recipe> recipes = query.field("ingredients.name").in(this.ingredients).find().toList();
         RecipeComparator recipeComparator = new RecipeComparator(this.ingredients);
         Collections.sort(recipes, recipeComparator.reversed());
+        this.addIDAndConversions(recipes);
         return recipes;
     }
 }

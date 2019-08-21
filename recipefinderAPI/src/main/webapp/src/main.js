@@ -183,9 +183,14 @@ function creatNodes(recipeList) {
 		newNode.querySelector(".preptime").textContent += recipe["preptime"] + " minutes";
 
 		ingredientsNode = newNode.querySelector(".ingredients");
-		currentIngredientNode = newNode.querySelector(".ingredient");
-		ingredients = recipe["ingredients"];
-		createIngredientNodes(ingredients, ingredientsNode, currentIngredientNode);
+		
+		ingredientNodeUS = newNode.querySelector(".ingredientus");
+		ingredientsUS = recipe["ingredientsUS"];
+		createIngredientNodes(ingredientsUS, ingredientsNode, ingredientNodeUS);
+		
+		ingredientNodeMetric = newNode.querySelector(".ingredientmetric");
+		ingredientsMetric = recipe["ingredientsMetric"];
+		createIngredientNodes(ingredientsMetric, ingredientsNode, ingredientNodeMetric);
 
 		newNode.querySelector(".instructions").innerHTML += recipe["instructions"];
 		
@@ -195,33 +200,32 @@ function creatNodes(recipeList) {
 
 		recipesDiv.appendChild(newNode);
 	}
-
 	addEventListernersRecipe();
 	}
 }
 
 function createIngredientNodes(ingredients, ingredientsNode, currentIngredientNode) {
 	i = ingredients.length;
-		for (ingredient of ingredients) {
-			ingredientText = "";
-			if (ingredient["amount"]) {
-				ingredientText += ingredient["amount"] + " ";
-			}
-			if (ingredient["unit"]) {
-				ingredientText += ingredient["unit"] + " ";
-			}
-			ingredientText += ingredient["name"];
-			if (ingredient["notes"]) {
-				ingredientText += ingredient["notes"];
-			}
-			currentIngredientNode.textContent = ingredientText;
-			i--;
-			if (i > 0) {
-				nextNode = currentIngredientNode.cloneNode(true);
-				ingredientsNode.appendChild(nextNode);
-				currentIngredientNode = nextNode;
-			}
+	for (ingredient of ingredients) {
+		ingredientText = "";
+		if (ingredient["amount"]) {
+			ingredientText += ingredient["amount"] + " ";
 		}
+		if (ingredient["unit"]) {
+			ingredientText += ingredient["unit"] + " ";
+		}
+		ingredientText += ingredient["name"];
+		if (ingredient["notes"]) {
+			ingredientText += ingredient["notes"];
+		}
+		currentIngredientNode.textContent = ingredientText;
+		i--;
+		if (i > 0) {
+			nextNode = currentIngredientNode.cloneNode(true);
+			ingredientsNode.appendChild(nextNode);
+			currentIngredientNode = nextNode;
+		}
+	}
 }
 
 async function addIngredientInputFields() {
@@ -497,6 +501,26 @@ async function editRecipe() {
 		console.error(error);
 		bottomtext = document.getElementById("bottomtext");
 		bottomtext.textContent = "An error occurred";
+	}
+}
+
+function toggleIngredients() {
+	ingredientsUS = document.getElementsByClassName("ingredientus");
+	ingredientsMetric = document.getElementsByClassName("ingredientmetric");
+	if (ingredientsUS[0].style.display === "none") {
+		for (ingrUS of ingredientsUS) {
+			ingrUS.style.display = "list-item";
+		}
+		for (ingrM of ingredientsMetric) {
+			ingrM.style.display = "none";
+		}
+	} else {
+		for (ingrUS of ingredientsUS) {
+			ingrUS.style.display = "none";
+		}
+		for (ingrM of ingredientsMetric) {
+			ingrM.style.display = "list-item";
+		}
 	}
 }
 
