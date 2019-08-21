@@ -70,7 +70,7 @@ public class ConverterTest {
     public void testTwoCups() {
         Ingredient water = new Ingredient("2", "cups", "water", null);
         Ingredient result = Converter.convertToMetricUnits(water);
-        Assert.assertEquals("480.00", result.getAmount());
+        Assert.assertEquals("480", result.getAmount());
         Assert.assertEquals("mL", result.getUnit());
     }
     
@@ -78,7 +78,7 @@ public class ConverterTest {
     public void testQuarterCup() {
         Ingredient water = new Ingredient("1/4", "cups", "water", null);
         Ingredient result = Converter.convertToMetricUnits(water);
-        Assert.assertEquals("60.00", result.getAmount());
+        Assert.assertEquals("60", result.getAmount());
         Assert.assertEquals("mL", result.getUnit());
     }
     
@@ -86,7 +86,7 @@ public class ConverterTest {
     public void testOneAndAHalfTbsp() {
         Ingredient water = new Ingredient("1 1/2", "tbsp", "water", null);
         Ingredient result = Converter.convertToMetricUnits(water);
-        Assert.assertEquals("22.50", result.getAmount());
+        Assert.assertEquals("22.5", result.getAmount());
         Assert.assertEquals("mL", result.getUnit());
     }
     
@@ -94,7 +94,7 @@ public class ConverterTest {
     public void testHalfTsp() {
         Ingredient water = new Ingredient("1/2", "tsp", "water", null);
         Ingredient result = Converter.convertToMetricUnits(water);
-        Assert.assertEquals("2.50", result.getAmount());
+        Assert.assertEquals("2.5", result.getAmount());
         Assert.assertEquals("mL", result.getUnit());
     }
     
@@ -102,7 +102,7 @@ public class ConverterTest {
     public void testTenOz() {
         Ingredient flour = new Ingredient("10", "oz", "flour", null);
         Ingredient result = Converter.convertToMetricUnits(flour);
-        Assert.assertEquals("283.50", result.getAmount());
+        Assert.assertEquals("284", result.getAmount());
         Assert.assertEquals("g", result.getUnit());
     }
     
@@ -110,7 +110,7 @@ public class ConverterTest {
     public void testTenFlOz() {
         Ingredient water = new Ingredient("10", "fl oz", "water", null);
         Ingredient result = Converter.convertToMetricUnits(water);
-        Assert.assertEquals("300.00", result.getAmount());
+        Assert.assertEquals("300", result.getAmount());
         Assert.assertEquals("mL", result.getUnit());
     }
     
@@ -118,7 +118,7 @@ public class ConverterTest {
     public void testTenFluidOunce() {
         Ingredient water = new Ingredient("10", "fluid ounce", "water", null);
         Ingredient result = Converter.convertToMetricUnits(water);
-        Assert.assertEquals("300.00", result.getAmount());
+        Assert.assertEquals("300", result.getAmount());
         Assert.assertEquals("mL", result.getUnit());
     }
     
@@ -126,7 +126,7 @@ public class ConverterTest {
     public void testTwoInch() {
         Ingredient ginger = new Ingredient("2", "inch", "ginger", null);
         Ingredient result = Converter.convertToMetricUnits(ginger);
-        Assert.assertEquals("5.08", result.getAmount());
+        Assert.assertEquals("5", result.getAmount());
         Assert.assertEquals("cm", result.getUnit());
     }
     
@@ -196,6 +196,14 @@ public class ConverterTest {
     public void testTwoThirdVF() {
         double result = Converter.fractionToDouble("⅔");
         Assert.assertEquals(0.67, result, 0.01);
+    }
+    
+    @Test
+    public void testFlourConversion() {
+        Ingredient salt = new Ingredient("1", "cup", "flour", null);
+        Ingredient result = Converter.convertToMetricUnits(salt);
+        Assert.assertEquals("150", result.getAmount());
+        Assert.assertEquals("g", result.getUnit());
     }
     
     @Test
