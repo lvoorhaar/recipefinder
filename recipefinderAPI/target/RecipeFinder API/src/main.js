@@ -300,7 +300,7 @@ function uncheckAllCheckbox() {
     allcheckbox.checked = false;
 }
 
-var unitOptions = ['cm','cup','cups','g','inch','ml','oz','pinch','tbsp','tsp']
+var unitOptions = ['cm','cup','cups','g','inch','mL','oz','pinch','tbsp','tsp', 'cloves']
 
 function validateInput() {
 	rcpname = document.getElementById("nameinput").value;

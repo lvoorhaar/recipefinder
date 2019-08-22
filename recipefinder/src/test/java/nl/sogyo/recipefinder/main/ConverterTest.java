@@ -82,21 +82,21 @@ public class ConverterTest {
         Assert.assertEquals("mL", result.getUnit());
     }
     
-    @Test
+    /*@Test
     public void testOneAndAHalfTbsp() {
         Ingredient water = new Ingredient("1 1/2", "tbsp", "water", null);
         Ingredient result = Converter.convertToMetricUnits(water);
         Assert.assertEquals("22.5", result.getAmount());
         Assert.assertEquals("mL", result.getUnit());
-    }
+    }*/
     
-    @Test
+    /*@Test
     public void testHalfTsp() {
         Ingredient water = new Ingredient("1/2", "tsp", "water", null);
         Ingredient result = Converter.convertToMetricUnits(water);
         Assert.assertEquals("2.5", result.getAmount());
         Assert.assertEquals("mL", result.getUnit());
-    }
+    }*/
     
     @Test
     public void testTenOz() {
@@ -128,6 +128,46 @@ public class ConverterTest {
         Ingredient result = Converter.convertToMetricUnits(ginger);
         Assert.assertEquals("5", result.getAmount());
         Assert.assertEquals("cm", result.getUnit());
+    }
+    
+    @Test
+    public void test120ml() {
+        Ingredient water = new Ingredient("120", "ml", "water", null);
+        Ingredient result = Converter.convertToUSUnits(water);
+        Assert.assertEquals("1/2", result.getAmount());
+        Assert.assertEquals("cup", result.getUnit());
+    }
+    
+    @Test
+    public void test100gFlour() {
+        Ingredient flour = new Ingredient("100", "g", "flour", null);
+        Ingredient result = Converter.convertToUSUnits(flour);
+        Assert.assertEquals("2/3", result.getAmount());
+        Assert.assertEquals("cup", result.getUnit());
+    }
+    
+    @Test
+    public void test1dlWater() {
+        Ingredient water = new Ingredient("1", "dl", "water", null);
+        Ingredient result = Converter.convertToUSUnits(water);
+        Assert.assertEquals("2", result.getAmount());
+        Assert.assertEquals("tsp", result.getUnit());
+    }
+    
+    @Test
+    public void test3dlWater() {
+        Ingredient water = new Ingredient("3", "dl", "water", null);
+        Ingredient result = Converter.convertToUSUnits(water);
+        Assert.assertEquals("1/8", result.getAmount());
+        Assert.assertEquals("cup", result.getUnit());
+    }
+    
+    @Test
+    public void test1mlWater() {
+        Ingredient water = new Ingredient("1", "ml", "water", null);
+        Ingredient result = Converter.convertToUSUnits(water);
+        Assert.assertEquals("1/4", result.getAmount());
+        Assert.assertEquals("tsp", result.getUnit());
     }
     
     @Test
@@ -199,11 +239,31 @@ public class ConverterTest {
     }
     
     @Test
+    public void testFraction15() {
+        String result = Converter.doubleToFractionString(1.5);
+        Assert.assertEquals("1 1/2", result);
+    }
+    
+    @Test
+    public void testFraction195() {
+        String result = Converter.doubleToFractionString(1.95);
+        Assert.assertEquals("2", result);
+    }
+    
+    @Test
     public void testFlourConversion() {
-        Ingredient salt = new Ingredient("1", "cup", "flour", null);
-        Ingredient result = Converter.convertToMetricUnits(salt);
+        Ingredient flour = new Ingredient("1", "cup", "flour", null);
+        Ingredient result = Converter.convertToMetricUnits(flour);
         Assert.assertEquals("150", result.getAmount());
         Assert.assertEquals("g", result.getUnit());
+    }
+    
+    @Test
+    public void testCupToUSConversion() {
+        Ingredient flour = new Ingredient("1", "cup", "flour", null);
+        Ingredient result = Converter.convertToUSUnits(flour);
+        Assert.assertEquals("1", result.getAmount());
+        Assert.assertEquals("cup", result.getUnit());
     }
     
     @Test

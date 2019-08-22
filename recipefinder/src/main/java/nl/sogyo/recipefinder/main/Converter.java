@@ -15,69 +15,69 @@ import java.util.Map;
  * @author lvoorhaar
  */
 public class Converter {
-    
-    private static final Map<String, Double> densities;
-    static {
-        Map<String, Double> aMap = new HashMap<>();
-        aMap.put("all-purpose flour", 0.625);
-        aMap.put("flour", 0.625);
-        aMap.put("sugar", 1.0);
-        aMap.put("white sugar", 1.0);
-        aMap.put("caster sugar", 0.94);
-        aMap.put("granulated sugar", 0.825);
-        aMap.put("brown sugar", 0.75);
-        aMap.put("icing sugar", 0.5);
-        aMap.put("cocoa powder", 0.5);
-        aMap.put("butter", 0.94);
-        aMap.put("chocolate", 0.71);
-        aMap.put("peanut butter", 0.94);
-        aMap.put("salt", 2.17);
-        aMap.put("cornstarch", 0.54);
-        aMap.put("pasta", 0.50);
-        aMap.put("macaroni", 0.55);
-        aMap.put("spaghetti", 0.38);
-        aMap.put("cheese", 0.34);
-        aMap.put("oats", 0.35);
-        aMap.put("rolled oats", 0.35);
-        aMap.put("coconut", 0.35);
-        aMap.put("baking powder", 0.8);
-        aMap.put("baking soda", 1.2);
-        aMap.put("protein powder", 0.41);
-        aMap.put("chia seeds", 0.81);
-        aMap.put("hemp seeds", 0.68);
-        aMap.put("flax seeds", 0.72);
-        aMap.put("cinnamon", 0.53);
-        aMap.put("pecans", 0.46);
-        densities = Collections.unmodifiableMap(aMap);
-    }
 
     public static Ingredient convertToUSUnits(Ingredient originalIngredient) {
-        /*String amount = originalIngredient.getAmount();
-        String unit = originalIngredient.getUnit();
-        String name = originalIngredient.getName();
-        String notes = originalIngredient.getNotes();
-        String newAmount;
-        String newUnit;
-        if (unit.toLowerCase().contains("ml")) {
-            
-        } else if (unit.toLowerCase().contains("dl")) {
-            
-        } else if (unit.toLowerCase().contains("l")) {
-            
-        } else if (unit.toLowerCase().contains("kg") || unit.toLowerCase().contains("kilogram")) {
-            
-        } else if (unit.toLowerCase().equals("g") || unit.toLowerCase().contains("gram")) {
-            
+        if (originalIngredient.getAmount() != null && originalIngredient.getUnit() != null) {
+            String amount = originalIngredient.getAmount();
+            String unit = originalIngredient.getUnit();
+            String name = originalIngredient.getName();
+            String notes = originalIngredient.getNotes();
+            String newAmount;
+            String newUnit;
+            if (unit.toLowerCase().contains("ml")) {
+                if (fractionToDouble(amount) >= 30) {
+                    newAmount = doubleToFractionString(fractionToDouble(amount) / 240);
+                    newUnit = "cup";
+                } else if (fractionToDouble(amount) > 10) {
+                    newAmount = doubleToFractionString(fractionToDouble(amount) / 15);
+                    newUnit = "tbsp";
+                } else {
+                    newAmount = doubleToFractionString(fractionToDouble(amount) / 5);
+                    newUnit = "tsp";
+                }
+            } else if (unit.toLowerCase().contains("dl")) {
+                if (fractionToDouble(amount) >= 3) {
+                    newAmount = doubleToFractionString(fractionToDouble(amount) / 24);
+                    newUnit = "cup";
+                } else if (fractionToDouble(amount) > 1) {
+                    newAmount = doubleToFractionString(fractionToDouble(amount) / 15);
+                    newUnit = "tbsp";
+                } else {
+                    newAmount = doubleToFractionString(fractionToDouble(amount) / 0.5);
+                    newUnit = "tsp";
+                }
+            } else if (unit.toLowerCase().equals("l") || unit.toLowerCase().equals("liter") || unit.toLowerCase().equals("litre")) {
+                newAmount = doubleToFractionString(fractionToDouble(amount) / 0.24);
+                newUnit = "cup";
+            } else if (unit.toLowerCase().contains("kg") || unit.toLowerCase().contains("kilogram")) {
+                if (Converter.densities.containsKey(name)) {
+                    newAmount = doubleToFractionString((fractionToDouble(amount) * 1000) / (240 * Converter.densities.get(name)));
+                    newUnit = "cup";
+                } else {
+                    newAmount = amount;
+                    newUnit = unit;
+                }
+            } else if (unit.toLowerCase().equals("g") || unit.toLowerCase().contains("gram")) {
+                if (Converter.densities.containsKey(name)) {
+                    newAmount = doubleToFractionString(fractionToDouble(amount) / (240 * Converter.densities.get(name)));
+                    newUnit = "cup";
+                } else {
+                    newAmount = amount;
+                    newUnit = unit;
+                }
+            } else {
+                newAmount = amount;
+                newUnit = unit;
+            }
+            Ingredient newIngredient = new Ingredient();
+            newIngredient.setAmount(newAmount);
+            newIngredient.setUnit(newUnit);
+            newIngredient.setName(name);
+            newIngredient.setNotes(notes);
+            return newIngredient;
         } else {
-            newAmount = amount;
-            newUnit = unit;
+            return originalIngredient;
         }
-        Ingredient newIngredient = new Ingredient();
-        newIngredient.setAmount(newAmount);
-        newIngredient.setUnit(newUnit);
-        newIngredient.setName(name);
-        newIngredient.setNotes(notes);*/
-        return originalIngredient;
     }
 
     public static Ingredient convertToMetricUnits(Ingredient originalIngredient) {
@@ -89,23 +89,7 @@ public class Converter {
             String newAmount;
             String newUnit;
             double doubleAmount;
-            if (unit.toLowerCase().contains("tsp") || unit.toLowerCase().contains("teaspoon")) {
-                doubleAmount = fractionToDouble(amount) * 5;
-                newUnit = "mL";
-                if (Converter.densities.containsKey(name)) {
-                    doubleAmount *= Converter.densities.get(name);
-                    newUnit = "g";
-                }
-                newAmount = String.format("%.1f", doubleAmount);
-            } else if (unit.toLowerCase().contains("tbsp") || unit.toLowerCase().contains("tablespoon")) {
-                doubleAmount = fractionToDouble(amount) * 15;
-                newUnit = "mL";
-                if (Converter.densities.containsKey(name)) {
-                    doubleAmount *= Converter.densities.get(name);
-                    newUnit = "g";
-                }
-                newAmount = String.format("%.1f", doubleAmount);
-            } else if (unit.toLowerCase().contains("cup")) {
+            if (unit.toLowerCase().contains("cup")) {
                 doubleAmount = fractionToDouble(amount) * 240;
                 newUnit = "mL";
                 if (Converter.densities.containsKey(name)) {
@@ -113,6 +97,22 @@ public class Converter {
                     newUnit = "g";
                 }
                 newAmount = String.format("%.0f", doubleAmount);
+            } else if ((unit.toLowerCase().contains("tbsp") || unit.toLowerCase().contains("tablespoon")) && fractionToDouble(amount) > 2) {
+                doubleAmount = fractionToDouble(amount) * 15;
+                newUnit = "mL";
+                if (Converter.densities.containsKey(name)) {
+                    doubleAmount *= Converter.densities.get(name);
+                    newUnit = "g";
+                }
+                newAmount = String.format("%.1f", doubleAmount);
+            /*} else if (unit.toLowerCase().contains("tsp") || unit.toLowerCase().contains("teaspoon")) {
+                doubleAmount = fractionToDouble(amount) * 5;
+                newUnit = "mL";
+                if (Converter.densities.containsKey(name)) {
+                    doubleAmount *= Converter.densities.get(name);
+                    newUnit = "g";
+                }
+                newAmount = String.format("%.1f", doubleAmount);*/
             } else if (unit.toLowerCase().contains("fl") && (unit.toLowerCase().contains("oz") || unit.toLowerCase().contains("ounce"))) {
                 doubleAmount = fractionToDouble(amount) * 30;
                 newUnit = "mL";
@@ -124,6 +124,10 @@ public class Converter {
             } else if (unit.toLowerCase().contains("inch") && !unit.toLowerCase().contains("pinch")) {
                 doubleAmount = fractionToDouble(amount) * 2.54;
                 newUnit = "cm";
+                newAmount = String.format("%.0f", doubleAmount);
+            } else if (unit.toLowerCase().contains("can") && (unit.toLowerCase().contains("oz") || unit.toLowerCase().contains("ounce")) && unit.toLowerCase().contains("15")) {
+                doubleAmount = fractionToDouble(amount) * 396.9;
+                newUnit = "g";
                 newAmount = String.format("%.0f", doubleAmount);
             } else {
                 newAmount = amount;
@@ -166,7 +170,7 @@ public class Converter {
         }
         return doubleAmount;
     }
-    
+
     static double vulgarFractionToDouble(String s) {
         double doubleAmount = 0;
         if (s.length() > 1) {
@@ -185,7 +189,7 @@ public class Converter {
         }
         return doubleAmount;
     }
-    
+
     static double averageOfTwoValues(String s) {
         String[] splitamount = s.trim().split(" |\\-|to");
         double first = Converter.fractionToDouble(splitamount[0]);
@@ -193,6 +197,123 @@ public class Converter {
         double average = (first + second) / 2.0;
         return average;
     }
+    
+    static String doubleToFractionString(double d) {
+        String result = "";
+        double decimals = d % 1;
+        if (d >= 1.0) {
+            if (decimals < 0.94) {
+                result += (int)d + " ";
+            } else {
+                result += (int)(d + 1);
+            }
+        }
+        if (decimals <= 0.06) {
+        } else if (decimals <= 0.19) {
+            result += "1/8";
+        } else if (decimals <= 0.29) {
+            result += "1/4";
+        } else if (decimals <= 0.35) {
+            result += "1/3";
+        } else if (decimals <= 0.44) {
+            result += "3/8";
+        } else if (decimals <= 0.56) {
+            result += "1/2";
+        } else if (decimals <= 0.65) {
+            result += "5/8";
+        } else if (decimals <= 0.71) {
+            result += "2/3";
+        } else if (decimals <= 0.81) {
+            result += "3/4";
+        } else if (decimals <= 0.94) {
+            result += "7/8";
+        }
+        return result.trim();
+    }
+
+    private static final Map<String, Double> densities;
+
+    static {
+        Map<String, Double> aMap = new HashMap<>();
+        aMap.put("all-purpose flour", 0.625);
+        aMap.put("flour", 0.625);
+        aMap.put("wholemeal flour", 0.51);
+        aMap.put("whole wheat flour", 0.51);
+        aMap.put("buckwheat flour", 0.66);
+        aMap.put("cornflour", 0.55);
+        aMap.put("oat flour", 0.53);
+        aMap.put("cake flour", 0.5);
+        aMap.put("sugar", 0.95);
+        aMap.put("white sugar", 0.9);
+        aMap.put("raw sugar", 0.95);
+        aMap.put("cane sugar", 0.95);
+        aMap.put("coconut sugar", 0.81);
+        aMap.put("palm sugar", 0.91);
+        aMap.put("caster sugar", 0.94);
+        aMap.put("granulated sugar", 0.7);
+        aMap.put("brown sugar", 0.75);
+        aMap.put("light brown sugar", 0.75);
+        aMap.put("powdered sugar", 0.56);
+        aMap.put("icing sugar", 0.5);
+        aMap.put("confectioners' sugar", 0.5);
+        aMap.put("cocoa powder", 0.5);
+        aMap.put("cacao nibs", 0.68);
+        aMap.put("instant dry yeast", 0.62);
+        aMap.put("butter", 0.94);
+        aMap.put("unsalted butter", 0.94);
+        aMap.put("vegan butter", 0.94);
+        aMap.put("chocolate", 0.71);
+        aMap.put("peanut butter", 0.94);
+        aMap.put("nutella", 1.2);
+        aMap.put("salt", 2.17);
+        aMap.put("sea salt", 2.17);
+        aMap.put("cornstarch", 0.54);
+        aMap.put("pasta", 0.50);
+        aMap.put("macaroni", 0.55);
+        aMap.put("spaghetti", 0.38);
+        aMap.put("cheese", 0.34);
+        aMap.put("oats", 0.35);
+        aMap.put("rolled oats", 0.35);
+        aMap.put("coconut", 0.35);
+        aMap.put("baking powder", 0.9);
+        aMap.put("baking soda", 1.2);
+        aMap.put("protein powder", 0.41);
+        aMap.put("tahini", 1.01);
+        aMap.put("chia seeds", 0.81);
+        aMap.put("hemp seeds", 0.68);
+        aMap.put("flaxseeds", 0.72);
+        aMap.put("sunflower seeds", 0.62);
+        aMap.put("cinnamon", 0.53);
+        aMap.put("curry powder", 0.43);
+        aMap.put("garlic powder", 0.32);
+        aMap.put("pecans", 0.46);
+        aMap.put("almonds", 0.46);
+        aMap.put("cashews", 0.5);
+        aMap.put("peanuts", 0.53);
+        aMap.put("rice", 0.72);
+        aMap.put("white rice", 0.72);
+        aMap.put("brown rice", 0.72);
+        aMap.put("arborio rice", 0.72);
+        aMap.put("brown onions", 0.9);
+        aMap.put("red onions", 0.9);
+        aMap.put("red onion", 0.9);
+        aMap.put("strawberries", 1.0);
+        aMap.put("blueberries", 1.0);
+        aMap.put("pineapple", 1.0);
+        aMap.put("carrots", 0.54);
+        aMap.put("corn", 0.62);
+        aMap.put("bell pepper", 0.51);
+        aMap.put("kale", 0.089);
+        aMap.put("cabbage", 0.45);
+        aMap.put("cauliflower", 0.45);
+        aMap.put("broccoli", 0.45);
+        aMap.put("ginger", 1.01);
+        aMap.put("garlic", 1.01);
+        aMap.put("dry kidney beans", 0.72);
+        aMap.put("lentils", 0.89);
+        aMap.put("soybeans", 0.74);
+        aMap.put("gelatin", 1.27);
+        aMap.put("honey", 1.42);
+        densities = Collections.unmodifiableMap(aMap);
+    }
 }
-
-
