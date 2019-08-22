@@ -174,9 +174,30 @@ article {
 	padding-bottom: 10px;
 	line-height: 110%;
 }
+.sourcelink {
+	grid-column: 1;
+	padding-left: 10px;
+	display: none;
+}
+
+.sourcelink:link {
+	color: var(--primary-color);
+}
+
+.sourcelink:visited {
+	color: var(--primary-color);
+}
+
+.sourcelink:hover {
+	color: var(--accent-color);
+}
+
+.sourcelink:active {
+	color: var(--accent-color);
+}
 
 .editlink {
-	grid-column: 1 / 3;
+	grid-column: 2;
 	text-align: center;
 	margin-bottom: 20px;
 }
@@ -323,6 +344,12 @@ article {
 	font-family: 'Lato', sans-serif;
 	line-height: 130%;
 	resize: none;
+}
+
+#sourceinput {
+	width: 700px;
+	margin: 5px 5px 5px;
+	padding: 2px 2px 2px;
 }
 
 #addfields {

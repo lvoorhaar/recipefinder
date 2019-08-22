@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="34" failures="0" name="nl.sogyo.recipefinder.main.ConverterTest" time="0.559" errors="0" skipped="0">
+<testsuite tests="34" failures="0" name="nl.sogyo.recipefinder.main.ConverterTest" time="0.538" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_144\jre\bin"/>
@@ -65,38 +65,38 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testOneThirdVF" time="0.017"/>
+  <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testOneThirdVF" time="0.015"/>
   <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testAverageValue" time="0"/>
-  <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testTwoThirdVF" time="0"/>
-  <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testTenFlOz" time="0"/>
+  <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testTwoThirdVF" time="0.003"/>
+  <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testTenFlOz" time="0.002"/>
   <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testOneApple" time="0"/>
   <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testOnePinch" time="0"/>
   <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testOneAndQuarterVF" time="0.001"/>
   <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testEgg" time="0"/>
   <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testTwoCups" time="0"/>
-  <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testTwoInch" time="0"/>
+  <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testTwoInch" time="0.001"/>
   <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="test120ml" time="0"/>
   <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testThreeQuarterVF" time="0"/>
-  <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testPinch" time="0.001"/>
+  <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testPinch" time="0"/>
   <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testTenOz" time="0.001"/>
   <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testTenFluidOunce" time="0"/>
   <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testFraction15" time="0"/>
   <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testTwoFractionsNoSpaces" time="0"/>
   <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testAverageValueWithTo" time="0"/>
-  <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testwoAndQuarterToDouble" time="0.001"/>
+  <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testwoAndQuarterToDouble" time="0"/>
   <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testFraction195" time="0"/>
   <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testQuarterCup" time="0"/>
   <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="test100gFlour" time="0"/>
-  <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testFlourConversion" time="0"/>
+  <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testFlourConversion" time="0.001"/>
   <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="test3dlWater" time="0"/>
   <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="test1mlWater" time="0"/>
-  <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testAverageValueWithSpaces" time="0"/>
-  <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testTwoAndHalfVF" time="0"/>
-  <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testRecipeWithFractions" time="0.538"/>
+  <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testAverageValueWithSpaces" time="0.001"/>
+  <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testTwoAndHalfVF" time="0.001"/>
+  <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testRecipeWithFractions" time="0.511"/>
   <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testCupToUSConversion" time="0"/>
   <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testOneToDouble" time="0"/>
   <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testTwoFractions" time="0"/>
   <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testHalfToDouble" time="0"/>
-  <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testOneEightVF" time="0"/>
+  <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="testOneEightVF" time="0.001"/>
   <testcase classname="nl.sogyo.recipefinder.main.ConverterTest" name="test1dlWater" time="0"/>
 </testsuite>

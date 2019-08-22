@@ -53,6 +53,9 @@ public class Recipe {
         this.preptime = Integer.parseInt((String)document.get("preptime"));
         this.rating = Integer.parseInt((String)document.get("rating"));
         this.instructions = (String)document.get("instructions");
+        if ((String)document.get("source") != null) {
+            this.source = (String)document.get("source");
+        }
         
         this.categories = new ArrayList<>();
         ArrayList<String> categories = (ArrayList<String>)document.get("categories");

@@ -194,6 +194,14 @@ function creatNodes(recipeList) {
 
 		newNode.querySelector(".instructions").innerHTML += recipe["instructions"];
 		
+		if (recipe["source"]) {
+			sourcelink = newNode.querySelector(".sourcelink");
+			source = recipe["source"];
+			sourcelink.href = source;
+			sourcelink.innerHTML += source;
+			sourcelink.style.display = "inline";
+		}
+		
 		editlink = newNode.querySelector(".editlink");
 		stringID = recipe["stringID"];
 		editlink.href = "edit.html?" + stringID;
@@ -372,7 +380,11 @@ function createRecipe() {
 	
 	rcpinstructions = document.getElementById("instructionsinput").value;
 	rcpinstructions = rcpinstructions.replace(/(?:\r\n|\r|\n)/g, '<br>');
-	if (rcpinstructions.length < 1 || !rcpinstructions) rcpinstructions = "No instructions";
+	if (rcpinstructions.length < 1 || !rcpinstructions) {
+		rcpinstructions = "No instructions";
+	}
+	
+	rcpsource = document.getElementById("sourceinput").value;
 	
 	recipe = { 
         name: rcpname,
@@ -381,6 +393,7 @@ function createRecipe() {
         preptime: rcppreptime,
         ingredients: rcpingredients,
         instructions: rcpinstructions,
+		source: rcpsource,
     }
 	return recipe;
 }
@@ -474,6 +487,11 @@ async function fillEditFields(recipe) {
 	instructionsinput = document.getElementById("instructionsinput");
 	instructions = recipe["instructions"];
 	instructionsinput.innerHTML = instructions.replace(/<br\s*[\/]?>/gi, "\n");
+	
+	if (recipe["source"]) {
+		sourceinput = document.getElementById("sourceinput");
+		sourceinput.value = recipe["source"];
+	}
 	
 	updateButton = document.getElementById("updaterecipe");
 	updateButton.value = recipe["stringID"];

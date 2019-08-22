@@ -243,6 +243,7 @@ public class Converter {
         aMap.put("cornflour", 0.55);
         aMap.put("oat flour", 0.53);
         aMap.put("cake flour", 0.5);
+        aMap.put("almond flour", 0.4);
         aMap.put("sugar", 0.95);
         aMap.put("white sugar", 0.9);
         aMap.put("raw sugar", 0.95);
@@ -297,6 +298,7 @@ public class Converter {
         aMap.put("brown onions", 0.9);
         aMap.put("red onions", 0.9);
         aMap.put("red onion", 0.9);
+        aMap.put("shallot", 0.9);
         aMap.put("strawberries", 1.0);
         aMap.put("blueberries", 1.0);
         aMap.put("pineapple", 1.0);

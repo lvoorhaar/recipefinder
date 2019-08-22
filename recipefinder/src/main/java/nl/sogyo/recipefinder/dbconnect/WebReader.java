@@ -142,7 +142,7 @@ public class WebReader {
 
     public static void main(String[] args) throws Exception {
         
-        String weblink = "https://minimalistbaker.com/sheet-pan-meal-curried-sweet-potato-chickpeas/";
+        String weblink = "https://minimalistbaker.com/smoky-1-pot-refried-lentils/";
 
         Recipe importedRecipe = WebReader.getRecipeFromMinimalistBaker(weblink);
         importedRecipe.setSource(weblink);
