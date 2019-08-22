@@ -375,6 +375,12 @@ article {
 	color: red;
 }
 
+#importrecipe {
+	width: 200px;
+	padding: 2px 2px 2px;
+	margin: 5px 5px 5px;
+}
+
 .autocomplete {
 	position: relative;
 	display: inline-block;

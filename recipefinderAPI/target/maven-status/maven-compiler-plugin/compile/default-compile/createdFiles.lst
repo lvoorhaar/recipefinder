@@ -5,4 +5,5 @@ nl\sogyo\recipefinder\api\RecipeSearcher.class
 nl\sogyo\recipefinder\api\AddNewRecipe.class
 nl\sogyo\recipefinder\api\DeleteRecipe.class
 nl\sogyo\recipefinder\api\CategoryLoader.class
+nl\sogyo\recipefinder\api\ImportRecipe.class
 nl\sogyo\recipefinder\api\UpdateRecipe.class

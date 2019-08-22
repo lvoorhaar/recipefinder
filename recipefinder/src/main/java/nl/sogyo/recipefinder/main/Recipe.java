@@ -39,13 +39,14 @@ public class Recipe {
     
     public Recipe() {}
 
-    public Recipe(String name, List<Category> categories, int preptime, int rating, String instructions, List<Ingredient> ingredients) {
+    public Recipe(String name, List<Category> categories, int preptime, int rating, String instructions, List<Ingredient> ingredients, String source) {
         this.name = name;
         this.categories = categories;
         this.preptime = preptime;
         this.rating = rating;
         this.instructions = instructions;
         this.ingredients = ingredients;
+        this.source = source;
     }
     
     public Recipe(Map<String, Object> document) {

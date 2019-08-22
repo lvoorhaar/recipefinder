@@ -22,7 +22,7 @@ import org.jsoup.select.Elements;
  */
 public class WebReader {
 
-    public static Recipe getRecipeFromBoldBaking(String link) throws IOException {
+    /*public static Recipe getRecipeFromBoldBaking(String link) throws IOException {
         //read HTML from website
         Document doc = Jsoup.connect(link).get();
 
@@ -77,7 +77,9 @@ public class WebReader {
             ingredients.add(i);
         }
 
-        Recipe importedRecipe = new Recipe(name, categories, preptime, rating, instructions, ingredients);
+        String source = link;
+
+        Recipe importedRecipe = new Recipe(name, categories, preptime, rating, instructions, ingredients, source);
 
         return importedRecipe;
     }
@@ -135,17 +137,18 @@ public class WebReader {
             ingredients.add(i);
         }
 
-        Recipe importedRecipe = new Recipe(name, categories, preptime, rating, instructions, ingredients);
+        String source = link;
+
+        Recipe importedRecipe = new Recipe(name, categories, preptime, rating, instructions, ingredients, source);
 
         return importedRecipe;
-    }
+    }*/
 
     public static void main(String[] args) throws Exception {
         
-        String weblink = "https://minimalistbaker.com/smoky-1-pot-refried-lentils/";
+        String weblink = "https://minimalistbaker.com/1-pan-tempeh-bolognese/";
 
-        Recipe importedRecipe = WebReader.getRecipeFromMinimalistBaker(weblink);
-        importedRecipe.setSource(weblink);
+        /*Recipe importedRecipe = WebReader.getRecipeFromMinimalistBaker(weblink);
 
         System.out.println(importedRecipe);
 
@@ -154,7 +157,11 @@ public class WebReader {
         morphia.mapPackage("nl.sogyo.recipefinder.main");
         Datastore datastore = morphia.createDatastore(new MongoClient(), "recipes");
         datastore.ensureIndexes();
-        datastore.save(importedRecipe);
+        datastore.save(importedRecipe);*/
+        
+        ImportHandler importHandler = new ImportHandler();
+        
+        importHandler.importRecipeFromLink(weblink);
 
     }
 

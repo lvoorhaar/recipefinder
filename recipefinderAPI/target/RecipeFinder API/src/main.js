@@ -20,6 +20,11 @@ async function loadEditPage() {
 	addEventListernersEdit();
 }
 
+function loadImportPage() {
+	importButton = document.getElementById("importrecipe");
+	importButton.addEventListener("click", importRecipe);
+}
+
 function addEventListernersSearch() {
 	searchButton = document.getElementById("searchbutton");
 	searchButton.addEventListener("click", search);
@@ -585,6 +590,29 @@ function checkToggle() {
 	}
 }
 
+async function importRecipe() {
+	sourcelink = document.getElementById("sourceinput").value;
+	linkobject = {
+		source: sourcelink,
+	}
+	try {
+		response = await fetch("api/importrecipe",  {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+			body: JSON.stringify(linkobject)
+            });
+		console.log("trying to import recipe...");
+		check = await response.json();
+		console.log(await check);
+		bottomtext = document.getElementById("bottomtext");
+		bottomtext.textContent = await check;
+	} catch (error) {
+		console.error(error);
+	}
+}
 
 /* copied code */
 function autocomplete(inp, arr) {
