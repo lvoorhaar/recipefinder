@@ -31,7 +31,7 @@ public class AddNewRecipe {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response searchRecipes(
+    public Response addRecipe(
             @Context HttpServletRequest request,
             Map<String, Object> recipeDetails) {
 

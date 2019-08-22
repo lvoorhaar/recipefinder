@@ -370,6 +370,11 @@ article {
 	margin: 5px 5px 5px;
 }
 
+#deleterecipe {
+	float: right;
+	color: red;
+}
+
 .autocomplete {
 	position: relative;
 	display: inline-block;

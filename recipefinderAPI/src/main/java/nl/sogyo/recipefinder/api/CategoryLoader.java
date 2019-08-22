@@ -26,7 +26,7 @@ public class CategoryLoader {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response loadIngredients(
+    public Response loadCategories(
             @Context HttpServletRequest request) {
 
         HttpSession session = request.getSession(true);

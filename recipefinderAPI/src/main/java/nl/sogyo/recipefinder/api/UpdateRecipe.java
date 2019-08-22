@@ -35,7 +35,7 @@ public class UpdateRecipe {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{recipeId}")
-    public Response searchRecipes(
+    public Response updateRecipe(
             @Context HttpServletRequest request,
             @PathParam("recipeId") String recipeId,
             Map<String, Object> recipeDetails) {

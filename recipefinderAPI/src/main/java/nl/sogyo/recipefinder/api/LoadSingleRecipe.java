@@ -10,8 +10,6 @@ import com.mongodb.MongoClient;
 import dev.morphia.Datastore;
 import dev.morphia.Morphia;
 import dev.morphia.query.Query;
-import java.util.Collections;
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.GET;
@@ -34,7 +32,7 @@ public class LoadSingleRecipe {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{recipeId}")
-    public Response playGet(
+    public Response loadSingleRecipe(
             @PathParam("recipeId") String recipeId,
             @Context HttpServletRequest request) {
 

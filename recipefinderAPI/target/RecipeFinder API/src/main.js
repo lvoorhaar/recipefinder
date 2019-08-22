@@ -39,6 +39,8 @@ function addEventListernersEdit() {
 	addButton.addEventListener("click", editRecipe);
 	addFieldsButton = document.getElementById("addfields");
 	addFieldsButton.addEventListener("click", addIngredientInputFields);
+	deleteRecipeButton = document.getElementById("deleterecipe");
+	deleteRecipeButton.addEventListener("click", confirmDeleteRecipe);
 }
 
 function addEventListernersRecipe() {
@@ -495,6 +497,9 @@ async function fillEditFields(recipe) {
 	
 	updateButton = document.getElementById("updaterecipe");
 	updateButton.value = recipe["stringID"];
+	
+	updateButton = document.getElementById("deleterecipe");
+	updateButton.value = recipe["stringID"];
 }
 
 async function editRecipe() {
@@ -516,6 +521,35 @@ async function editRecipe() {
 		console.log(await check);
 		bottomtext = document.getElementById("bottomtext");
 		bottomtext.textContent = "Recipe updated succesfully";
+	} catch (error) {
+		console.error(error);
+		bottomtext = document.getElementById("bottomtext");
+		bottomtext.textContent = "An error occurred";
+	}
+}
+
+function confirmDeleteRecipe() {
+	if (confirm("Are you sure you want to delete this recipe from the database? This can't be undone.")) {
+		deleteRecipe();
+	}
+}
+
+async function deleteRecipe() {
+	stringID = document.getElementById("updaterecipe").value;
+	query = "api/deleterecipe/" + stringID;
+	try {
+		response = await fetch(query,  {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+            });
+		console.log("deleting recipe from database...");
+		check = await response.json();
+		console.log(await check);
+		bottomtext = document.getElementById("bottomtext");
+		bottomtext.textContent = "Recipe was deleted from database";
 	} catch (error) {
 		console.error(error);
 		bottomtext = document.getElementById("bottomtext");
