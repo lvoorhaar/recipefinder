@@ -635,7 +635,7 @@ function autocomplete(inp, arr) {
       /*for each item in the array...*/
       for (i = 0; i < arr.length; i++) {
         /*check if the item starts with the same letters as the text field value:*/
-        if (arr[i].toLowerCase().includes(val.toLowerCase())) {
+        if (arr[i].toLowerCase().includes(val.toLowerCase()) && a.childElementCount <= 20) {
           /*create a DIV element for each matching element:*/
           b = document.createElement("DIV");
           b.innerHTML = arr[i];

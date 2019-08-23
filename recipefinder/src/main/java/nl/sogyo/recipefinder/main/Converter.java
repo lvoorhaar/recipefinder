@@ -314,7 +314,16 @@ public class Converter {
         aMap.put("pineapple", 0.5);
         aMap.put("carrots", 0.54);
         aMap.put("corn", 0.62);
-        aMap.put("bell pepper", 0.51);
+        aMap.put("bell pepper", 0.6);
+        aMap.put("bell peppers", 0.6);
+        aMap.put("red bell pepper", 0.6);
+        aMap.put("red bell peppers", 0.6);
+        aMap.put("green bell pepper", 0.6);
+        aMap.put("green bell peppers", 0.6);
+        aMap.put("potato", 0.63);
+        aMap.put("potatoes", 0.63);
+        aMap.put("sweet potato", 0.63);
+        aMap.put("sweet potatoes", 0.63);
         aMap.put("kale", 0.089);
         aMap.put("cabbage", 0.45);
         aMap.put("cauliflower", 0.45);
