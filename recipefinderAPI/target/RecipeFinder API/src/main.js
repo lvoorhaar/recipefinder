@@ -4,8 +4,8 @@ function loadSearchPage() {
 	addCategoryCheckboxes();
 }
 
-function loadBrowsePage() {
-	loadRecipes();
+async function loadBrowsePage() {
+	loadFirstBrowsePage(await loadRecipes());
 }
 
 function loadAddPage() {
@@ -145,7 +145,8 @@ async function loadRecipes() {
             });
 		console.log("fetching recipes...");
 		recipeList = await response.json();
-		creatNodes(recipeList);
+		localStorage.setItem("recipes", JSON.stringify(await recipeList));
+		return recipeList;
 	} catch (error) {
 		console.error(error);
 	}
@@ -218,6 +219,62 @@ function creatNodes(recipeList) {
 	addEventListernersRecipe();
 	checkToggle();
 	}
+}
+
+
+function createSingleRecipeNode(recipe) {
+	recipesDiv = document.getElementById("recipes");
+	template = document.getElementById("recipe");
+
+	newNode = template.content.cloneNode(true);
+
+	newNode.querySelector(".namebutton").textContent += recipe["name"];
+
+	categories = recipe["categories"];
+	categorytext = "";
+	i = categories.length;
+	for (category of categories) {
+		categorytext += category.toLowerCase();
+		i--;
+		if (i > 0) categorytext += ", ";
+	}
+
+	newNode.querySelector(".categories").textContent += categorytext;
+
+	rating = recipe["rating"];
+	ratingtext = "";
+	for (i = 1; i <= rating; i++) {
+		ratingtext += "☆";
+	}
+	newNode.querySelector(".rating").textContent += ratingtext;
+
+	newNode.querySelector(".preptime").textContent += recipe["preptime"] + " minutes";
+
+	ingredientsNode = newNode.querySelector(".ingredients");
+		
+	ingredientNodeUS = newNode.querySelector(".ingredientus");
+	ingredientsUS = recipe["ingredientsUS"];
+	createIngredientNodes(ingredientsUS, ingredientsNode, ingredientNodeUS);
+		
+	ingredientNodeMetric = newNode.querySelector(".ingredientmetric");
+	ingredientsMetric = recipe["ingredientsMetric"];
+	createIngredientNodes(ingredientsMetric, ingredientsNode, ingredientNodeMetric);
+
+	newNode.querySelector(".instructions").innerHTML += recipe["instructions"];
+		
+	if (recipe["source"]) {
+		sourcelink = newNode.querySelector(".sourcelink");
+		source = recipe["source"];
+		sourcelink.href = source;
+		sourcelink.innerHTML += source;
+		sourcelink.style.display = "inline";
+	}
+		
+	editlink = newNode.querySelector(".editlink");
+	stringID = recipe["stringID"];
+	editlink.href = "edit.html?" + stringID;
+
+	recipesDiv.appendChild(newNode);
 }
 
 function createIngredientNodes(ingredients, ingredientsNode, currentIngredientNode) {
@@ -613,6 +670,89 @@ async function importRecipe() {
 		console.error(error);
 	}
 }
+
+
+
+
+
+/* pagination */
+var current_page = 1;
+var records_per_page = 10;
+
+function prevPage() {
+    if (current_page > 1) {
+        current_page--;
+        changePage(current_page);
+    }
+}
+
+function nextPage() {
+    if (current_page < numPages()) {
+        current_page++;
+        changePage(current_page);
+    }
+}
+    
+function changePage(page) {
+    var btn_next = document.getElementById("btn_next");
+    var btn_prev = document.getElementById("btn_prev");
+    var page_span = document.getElementById("page");
+ 
+    if (page < 1) page = 1;
+    if (page > numPages()) page = numPages();
+
+    document.getElementById("recipes").innerHTML = "";
+	
+	recipeList = JSON.parse(localStorage.getItem("recipes"));
+	total_records = recipeList.length;
+
+    for (var i = (page-1) * records_per_page; i < (page * records_per_page) && i <  total_records; i++) {
+		createSingleRecipeNode(recipeList[i]);
+    }
+	
+	addEventListernersRecipe();
+	checkToggle();
+
+    page_span.innerHTML = page + "/" + numPages();
+
+    if (page == 1) {
+        btn_prev.style.visibility = "hidden";
+    } else {
+        btn_prev.style.visibility = "visible";
+    }
+
+    if (page == numPages()) {
+        btn_next.style.visibility = "hidden";
+    } else {
+        btn_next.style.visibility = "visible";
+    }
+}
+
+function numPages() {
+    return Math.ceil(JSON.parse(localStorage.getItem("recipes")).length / records_per_page);
+}
+
+function loadFirstBrowsePage(recipeList) {
+    btn_prev = document.getElementById("btn_prev");
+    page_span = document.getElementById("page");
+ 
+    page = 1;
+	
+	total_records = recipeList.length;
+
+    for (var i = (1-1) * records_per_page; i < (1 * records_per_page) && i <  total_records; i++) {
+		createSingleRecipeNode(recipeList[i]);
+    }
+	
+	addEventListernersRecipe();
+	checkToggle();
+
+    page_span.innerHTML = "1" + "/" + numPages();
+
+    btn_prev.style.visibility = "hidden";
+}
+
+
 
 /* copied code */
 function autocomplete(inp, arr) {

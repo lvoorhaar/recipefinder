@@ -253,6 +253,7 @@ public class Converter {
         aMap.put("sugar", 0.95);
         aMap.put("white sugar", 0.9);
         aMap.put("raw sugar", 0.95);
+        aMap.put("unrefined sugar", 0.95);
         aMap.put("cane sugar", 0.95);
         aMap.put("coconut sugar", 0.81);
         aMap.put("palm sugar", 0.91);
@@ -303,6 +304,7 @@ public class Converter {
         aMap.put("rice", 0.72);
         aMap.put("white rice", 0.72);
         aMap.put("brown rice", 0.72);
+        aMap.put("wild rice", 0.72);
         aMap.put("arborio rice", 0.72);
         aMap.put("brown onions", 0.7);
         aMap.put("red onions", 0.7);
@@ -331,6 +333,9 @@ public class Converter {
         aMap.put("crushed tomatoes", 1.0);
         aMap.put("diced tomatoes", 1.0);
         aMap.put("shiitake mushrooms", 0.3);
+        aMap.put("mushrooms", 0.3);
+        aMap.put("baby spinach", 0.18);
+        aMap.put("spinach", 0.24);
         aMap.put("ginger", 1.01);
         aMap.put("garlic", 1.01);
         aMap.put("dry kidney beans", 0.72);
@@ -349,6 +354,7 @@ public class Converter {
         aMap.put("parsley", 0.0833);
         aMap.put("avocado", 1.0);
         aMap.put("lady finger cookies", 0.375);
+        aMap.put("cream cheese", 1.01);
         densities = Collections.unmodifiableMap(aMap);
     }
 }
