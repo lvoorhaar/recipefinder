@@ -35,7 +35,7 @@ public class RecipeLoader {
         HttpSession session = request.getSession(true);
         RecipeCollection recipeCollection = new RecipeCollection();
         List<Recipe> recipes = recipeCollection.getRecipes();
-        Collections.shuffle(recipes);
+        Collections.reverse(recipes);
         
         String output = new Gson().toJson(recipes);
 

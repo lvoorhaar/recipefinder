@@ -104,7 +104,7 @@ public class Converter {
                     doubleAmount *= Converter.densities.get(name);
                     newUnit = "g";
                 }
-                newAmount = String.format("%.1f", doubleAmount);
+                newAmount = String.format("%.0f", doubleAmount);
             /*} else if (unit.toLowerCase().contains("tsp") || unit.toLowerCase().contains("teaspoon")) {
                 doubleAmount = fractionToDouble(amount) * 5;
                 newUnit = "mL";
@@ -113,6 +113,16 @@ public class Converter {
                     newUnit = "g";
                 }
                 newAmount = String.format("%.1f", doubleAmount);*/
+            } else if (unit.toLowerCase().contains("can") && (unit.toLowerCase().contains("oz") || unit.toLowerCase().contains("ounce")) 
+                    && (unit.toLowerCase().contains("15") || unit.toLowerCase().contains("14"))) {
+                doubleAmount = fractionToDouble(amount) * 400;
+                newUnit = "g";
+                newAmount = String.format("%.0f", doubleAmount);
+            } else if (unit.toLowerCase().contains("can") && (unit.toLowerCase().contains("oz") || unit.toLowerCase().contains("ounce")) 
+                    && unit.toLowerCase().contains("28")) {
+                doubleAmount = fractionToDouble(amount) * 800;
+                newUnit = "g";
+                newAmount = String.format("%.0f", doubleAmount);
             } else if (unit.toLowerCase().contains("fl") && (unit.toLowerCase().contains("oz") || unit.toLowerCase().contains("ounce"))) {
                 doubleAmount = fractionToDouble(amount) * 30;
                 newUnit = "mL";
@@ -124,10 +134,6 @@ public class Converter {
             } else if (unit.toLowerCase().contains("inch") && !unit.toLowerCase().contains("pinch")) {
                 doubleAmount = fractionToDouble(amount) * 2.54;
                 newUnit = "cm";
-                newAmount = String.format("%.0f", doubleAmount);
-            } else if (unit.toLowerCase().contains("can") && (unit.toLowerCase().contains("oz") || unit.toLowerCase().contains("ounce")) && unit.toLowerCase().contains("15")) {
-                doubleAmount = fractionToDouble(amount) * 396.9;
-                newUnit = "g";
                 newAmount = String.format("%.0f", doubleAmount);
             } else {
                 newAmount = amount;
@@ -264,7 +270,10 @@ public class Converter {
         aMap.put("unsalted butter", 0.94);
         aMap.put("vegan butter", 0.94);
         aMap.put("chocolate", 0.71);
-        aMap.put("peanut butter", 0.94);
+        aMap.put("peanut butter", 1.08);
+        aMap.put("nut butter", 1.08);
+        aMap.put("almond butter", 1.08);
+        aMap.put("cashew butter", 1.08);
         aMap.put("nutella", 1.2);
         aMap.put("salt", 2.17);
         aMap.put("sea salt", 2.17);
@@ -295,13 +304,14 @@ public class Converter {
         aMap.put("white rice", 0.72);
         aMap.put("brown rice", 0.72);
         aMap.put("arborio rice", 0.72);
-        aMap.put("brown onions", 0.9);
-        aMap.put("red onions", 0.9);
-        aMap.put("red onion", 0.9);
-        aMap.put("shallot", 0.9);
-        aMap.put("strawberries", 1.0);
-        aMap.put("blueberries", 1.0);
-        aMap.put("pineapple", 1.0);
+        aMap.put("brown onions", 0.7);
+        aMap.put("red onions", 0.7);
+        aMap.put("red onion", 0.7);
+        aMap.put("onion", 0.7);
+        aMap.put("shallot", 0.7);
+        aMap.put("strawberries", 0.71);
+        aMap.put("blueberries", 0.71);
+        aMap.put("pineapple", 0.5);
         aMap.put("carrots", 0.54);
         aMap.put("corn", 0.62);
         aMap.put("bell pepper", 0.51);
@@ -309,13 +319,27 @@ public class Converter {
         aMap.put("cabbage", 0.45);
         aMap.put("cauliflower", 0.45);
         aMap.put("broccoli", 0.45);
+        aMap.put("crushed tomatoes", 1.0);
+        aMap.put("diced tomatoes", 1.0);
+        aMap.put("shiitake mushrooms", 0.3);
         aMap.put("ginger", 1.01);
         aMap.put("garlic", 1.01);
         aMap.put("dry kidney beans", 0.72);
+        aMap.put("kidney beans", 1.0);
+        aMap.put("dry lentils", 0.81);
+        aMap.put("red lentils", 0.81);
         aMap.put("lentils", 0.89);
-        aMap.put("soybeans", 0.74);
+        aMap.put("dry soybeans", 0.74);
+        aMap.put("dry chickpeas", 0.74);
+        aMap.put("chickpeas", 0.74);
+        aMap.put("split mung beans", 0.86);
+        aMap.put("mung beans", 0.86);
         aMap.put("gelatin", 1.27);
         aMap.put("honey", 1.42);
+        aMap.put("cilantro", 0.0833);
+        aMap.put("parsley", 0.0833);
+        aMap.put("avocado", 1.0);
+        aMap.put("lady finger cookies", 0.375);
         densities = Collections.unmodifiableMap(aMap);
     }
 }

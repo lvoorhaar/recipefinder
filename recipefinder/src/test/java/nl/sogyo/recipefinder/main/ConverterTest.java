@@ -285,4 +285,12 @@ public class ConverterTest {
         }
         Assert.assertFalse(exceptionThrown);
     }
+    
+    @Test
+    public void test28OunceCan() {
+        Ingredient tomatoes = new Ingredient("1", "28-ounce can", "tomatoes", null);
+        Ingredient result = Converter.convertToMetricUnits(tomatoes);
+        Assert.assertEquals("800", result.getAmount());
+        Assert.assertEquals("g", result.getUnit());
+    }
 }
