@@ -736,11 +736,9 @@ function loadFirstBrowsePage(recipeList) {
     btn_prev = document.getElementById("btn_prev");
     page_span = document.getElementById("page");
  
-    page = 1;
-	
 	total_records = recipeList.length;
 
-    for (var i = (1-1) * records_per_page; i < (1 * records_per_page) && i <  total_records; i++) {
+    for (var i = 0; i < records_per_page && i <  total_records; i++) {
 		createSingleRecipeNode(recipeList[i]);
     }
 	

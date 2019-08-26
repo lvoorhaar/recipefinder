@@ -330,8 +330,8 @@ public class Converter {
         aMap.put("cabbage", 0.45);
         aMap.put("cauliflower", 0.45);
         aMap.put("broccoli", 0.45);
-        aMap.put("crushed tomatoes", 1.0);
-        aMap.put("diced tomatoes", 1.0);
+        aMap.put("tomatoes", 1.0);
+        aMap.put("sun dried tomatoes", 0.23);
         aMap.put("shiitake mushrooms", 0.3);
         aMap.put("mushrooms", 0.3);
         aMap.put("baby spinach", 0.18);
@@ -355,6 +355,7 @@ public class Converter {
         aMap.put("avocado", 1.0);
         aMap.put("lady finger cookies", 0.375);
         aMap.put("cream cheese", 1.01);
+        aMap.put("breadcrumbs", 0.51);
         densities = Collections.unmodifiableMap(aMap);
     }
 }

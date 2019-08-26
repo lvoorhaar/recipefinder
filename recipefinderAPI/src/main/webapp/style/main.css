@@ -419,3 +419,9 @@ article {
 	font-weight: bold;
 	margin-top: 100px;
 }
+
+#navigatebuttons {
+	width: 100%;
+	display: inline-block;
+	text-align: center;
+}
