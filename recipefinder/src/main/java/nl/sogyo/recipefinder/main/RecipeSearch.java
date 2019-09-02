@@ -80,8 +80,7 @@ public class RecipeSearch {
     //retuns partial matches, sorts by exact ingredient match
     public List<Recipe> sortRecipes() {
         List<Recipe> recipes = query.field("ingredients.name").in(this.ingredients).find().toList();
-        RecipeComparator recipeComparator = new RecipeComparator(this.ingredients);
-        Collections.sort(recipes, recipeComparator.reversed());
+        Collections.sort(recipes, (recipe1, recipe2) -> recipe2.getMatchScore(this.ingredients).compareTo(recipe1.getMatchScore(this.ingredients)));
         this.addIDAndConversions(recipes);
         return recipes;
     }
@@ -89,8 +88,7 @@ public class RecipeSearch {
     //retuns partial matches, sorts by fuzzy ingredient match
     public List<Recipe> fuzzySortRecipes() {
         List<Recipe> recipes = query.field("ingredients.name").in(this.ingredients).find().toList();
-        RecipeComparator recipeComparator = new RecipeComparator(this.ingredients);
-        Collections.sort(recipes, recipeComparator.reversed());
+        Collections.sort(recipes, (recipe1, recipe2) -> recipe2.getFuzzyMatchScore(this.ingredients).compareTo(recipe1.getFuzzyMatchScore(this.ingredients)));
         this.addIDAndConversions(recipes);
         return recipes;
     }
